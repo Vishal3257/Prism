@@ -44,7 +44,7 @@ export default function Services() {
           <span className="text-xs sm:text-sm font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
             What We Do
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mt-2 tracking-tight">
+          <h2 className="font-general font-light text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white mt-2 tracking-[-0.025em]">
             Our <span className="text-gradient">Digital Services</span>
           </h2>
           <p className="mt-4 text-slate-600 dark:text-slate-400">
@@ -89,7 +89,7 @@ export default function Services() {
                     )}
                   </div>
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <h3 className="text-lg font-bold text-slate-900 dark:text-[#F8FAFC] group-hover:text-white transition-colors duration-300">
+                    <h3 className="text-lg font-medium font-general tracking-[-0.025em] text-slate-900 dark:text-[#F8FAFC] group-hover:text-white transition-colors duration-300">
                       {service.name}
                     </h3>
                   </div>

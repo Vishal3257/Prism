@@ -28,16 +28,16 @@ export default function Hero() {
               </span>
             </span>
 
-            {/* Headings: #0B1220 (Contrast 16.6:1 - WCAG AAA) */}
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0B1220] dark:text-white tracking-tight leading-[1.12]">
+            {/* Headings: General Sans Light with -0.025em tracking */}
+            <h1 className="font-general font-light text-4xl sm:text-5xl lg:text-6xl text-[#0B1220] dark:text-white tracking-[-0.025em] leading-[1.12]">
               Transform Your Ideas <br />
               <span className="bg-gradient-to-r from-[#2563EB] to-[#35B8A5] bg-clip-text text-transparent">
                 Into Digital Experiences
               </span>
             </h1>
 
-            {/* Body: #475569 with Muted #7C8799 bullets */}
-            <p className="mt-5 text-base sm:text-lg text-[#475569] dark:text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-normal">
+            {/* Body: Satoshi Light */}
+            <p className="mt-5 text-base sm:text-lg text-[#475569] dark:text-slate-300 max-w-xl mx-auto lg:mx-0 leading-relaxed font-satoshi font-light">
               Web development <span className="text-[#7C8799] dark:text-slate-600">•</span> Mobile apps{' '}
               <span className="text-[#7C8799] dark:text-slate-600">•</span> Digital marketing{' '}
               <span className="text-[#7C8799] dark:text-slate-600">•</span> SEO{' '}

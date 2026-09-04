@@ -53,11 +53,11 @@ export default function Stats() {
               key={stat.label}
               className="p-4 sm:p-6 rounded-2xl bg-white/70 dark:bg-slate-850/60 backdrop-blur-sm border border-slate-200/70 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow"
             >
-              <div className="text-3xl sm:text-4xl font-extrabold text-gradient mb-1">
+              <div className="text-3xl sm:text-4xl lg:text-5xl font-black font-['Space_Grotesk'] text-gradient mb-1 tracking-tight">
                 {counts[index]}
                 {stat.suffix}
               </div>
-              <div className="text-xs sm:text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+              <div className="text-xs sm:text-sm font-bold text-slate-500 dark:text-[#77859A] uppercase tracking-wider font-['Outfit']">
                 {stat.label}
               </div>
             </div>

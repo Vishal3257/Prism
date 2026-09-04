@@ -140,7 +140,7 @@ export default function Contact() {
           <span className="text-xs sm:text-sm font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
             Let&apos;s Connect
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mt-2 tracking-tight">
+          <h2 className="font-general font-light text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white mt-2 tracking-[-0.025em]">
             Get In <span className="text-gradient">Touch</span>
           </h2>
           <p className="mt-4 text-slate-600 dark:text-slate-400">

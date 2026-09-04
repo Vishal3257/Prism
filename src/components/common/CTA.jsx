@@ -64,7 +64,7 @@ export default function CTA() {
               </div>
 
               {/* Main Headline */}
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-[#F8FAFC] max-w-3xl mx-auto leading-[1.18] font-['Outfit']">
+              <h2 className="font-general font-light text-3xl sm:text-4xl lg:text-5xl tracking-[-0.025em] text-slate-900 dark:text-[#F8FAFC] max-w-3xl mx-auto leading-[1.18]">
                 Have an Ambitious Project in Mind?{' '}
                 <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-teal-500 dark:from-[#3B82F6] dark:via-[#60A5FA] dark:to-[#42C7B5] bg-clip-text text-transparent block mt-1.5 sm:mt-2.5">
                   Let&apos;s Build Something Extraordinary.

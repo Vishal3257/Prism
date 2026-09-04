@@ -28,13 +28,13 @@ export default function PageHeader({ title, subtitle, badge, breadcrumb }) {
         )}
 
         {/* Title */}
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-[#0B1220] dark:text-white tracking-tight leading-tight mb-5">
+        <h1 className="font-general font-light text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-[#0B1220] dark:text-white tracking-[-0.025em] leading-tight mb-5">
           {title}
         </h1>
 
         {/* Subtitle */}
         {subtitle && (
-          <p className="max-w-2xl mx-auto text-base sm:text-lg text-[#475569] dark:text-slate-300 leading-relaxed font-normal">
+          <p className="max-w-2xl mx-auto text-base sm:text-lg text-[#475569] dark:text-slate-300 leading-relaxed font-satoshi font-light">
             {subtitle}
           </p>
         )}

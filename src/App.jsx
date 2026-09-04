@@ -18,7 +18,7 @@ export default function App() {
     <BrowserRouter>
       <ThemeProvider>
         <ScrollToTop />
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-300 transition-colors duration-300 antialiased selection:bg-blue-500 selection:text-white flex flex-col justify-between">
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-300 transition-colors duration-400 ease-in-out antialiased selection:bg-blue-500 selection:text-white flex flex-col justify-between">
           <div>
             <Navbar />
             <main>

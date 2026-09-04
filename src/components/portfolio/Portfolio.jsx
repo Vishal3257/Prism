@@ -97,7 +97,7 @@ export default function Portfolio() {
           <span className="text-xs sm:text-sm font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
             Work Archive
           </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mt-2 tracking-tight">
+          <h2 className="font-general font-light text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white mt-2 tracking-[-0.025em]">
             Featured <span className="text-gradient">Projects</span>
           </h2>
           <p className="mt-4 text-slate-600 dark:text-slate-400">
@@ -238,7 +238,7 @@ export default function Portfolio() {
                     <div className="p-5">
                       <div className="flex items-center justify-between mb-2">
                         <h3
-                          className="text-lg font-bold text-slate-900 dark:text-[#F8FAFC] group-hover:text-white transition-colors duration-300 cursor-pointer"
+                          className="font-general font-medium tracking-[-0.025em] text-lg text-slate-900 dark:text-[#F8FAFC] group-hover:text-white transition-colors duration-300 cursor-pointer"
                           onClick={() => setSelectedProject(project)}
                         >
                           {project.name}

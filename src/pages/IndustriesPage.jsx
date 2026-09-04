@@ -19,10 +19,10 @@ export default function IndustriesPage() {
             <span className="text-xs font-bold uppercase tracking-widest text-[#2563EB] dark:text-blue-400 mb-3 block">
               Vertical Solutions
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0B1220] dark:text-white tracking-tight">
+            <h2 className="font-general font-light text-3xl sm:text-4xl text-[#0B1220] dark:text-white tracking-[-0.025em]">
               Engineered for Your Domain&apos;s Specific Challenges
             </h2>
-            <p className="mt-4 text-[#475569] dark:text-slate-300 text-base sm:text-lg">
+            <p className="mt-4 text-[#475569] dark:text-slate-300 text-base sm:text-lg font-satoshi font-light">
               Every industry has unique workflows, regulatory standards, and consumer expectations. We build software tailored to your specific ecosystem.
             </p>
           </div>
@@ -38,7 +38,7 @@ export default function IndustriesPage() {
                     <i className={`fa-solid ${ind.icon}`} />
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#0B1220] dark:text-white mb-2.5 tracking-tight group-hover:text-[#2563EB] dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="font-general font-medium text-xl text-[#0B1220] dark:text-white mb-2.5 tracking-[-0.025em] group-hover:text-[#2563EB] dark:group-hover:text-blue-400 transition-colors">
                     {ind.title}
                   </h3>
 

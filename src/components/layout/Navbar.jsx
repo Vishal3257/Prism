@@ -73,10 +73,12 @@ const Navbar = () => {
           <button
             type="button"
             onClick={toggle}
-            className="p-2.5 rounded-full text-slate-600 hover:text-[#1559D6] dark:text-slate-300 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-all cursor-pointer"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-600 hover:text-[#1559D6] dark:text-slate-300 dark:hover:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-all duration-300 cursor-pointer active:scale-90"
             aria-label={`Switch to ${dark ? 'light' : 'dark'} mode`}
           >
-            <i className={`fa-solid ${dark ? 'fa-sun text-amber-400' : 'fa-moon'} text-base`} />
+            <span className={`inline-block transition-transform duration-500 ease-out ${dark ? 'rotate-180 scale-100' : 'rotate-0 scale-100'}`}>
+              <i className={`fa-solid ${dark ? 'fa-sun text-amber-400 text-lg' : 'fa-moon text-slate-600 text-base'}`} />
+            </span>
           </button>
 
           <Link
@@ -95,10 +97,12 @@ const Navbar = () => {
           <button
             type="button"
             onClick={toggle}
-            className="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-all cursor-pointer"
+            className="relative flex h-10 w-10 items-center justify-center rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800/80 transition-all duration-300 cursor-pointer active:scale-90"
             aria-label={`Switch to ${dark ? 'light' : 'dark'} mode`}
           >
-            <i className={`fa-solid ${dark ? 'fa-sun text-amber-400' : 'fa-moon'} text-base`} />
+            <span className={`inline-block transition-transform duration-500 ease-out ${dark ? 'rotate-180 scale-100' : 'rotate-0 scale-100'}`}>
+              <i className={`fa-solid ${dark ? 'fa-sun text-amber-400 text-lg' : 'fa-moon text-slate-600 dark:text-slate-300 text-base'}`} />
+            </span>
           </button>
 
           <button

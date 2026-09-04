@@ -90,7 +90,7 @@ export default function Testimonials() {
             <span className="text-xs sm:text-sm font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
               Client Feedback
             </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mt-1.5 tracking-tight">
+            <h2 className="font-general font-light text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white mt-1.5 tracking-[-0.025em]">
               What Clients <span className="text-gradient">Say</span>
             </h2>
             <p className="mt-2.5 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-xl">

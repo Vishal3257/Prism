@@ -41,16 +41,14 @@ export default function Process() {
   const activeStep = steps[activeStepIndex]
 
   return (
-    <section className="py-10 sm:py-14 lg:py-16">
+    <section className="py-2 sm:py-3 lg:py-5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <span className="text-xs sm:text-sm font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
-            Execution
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 dark:text-white mt-2 tracking-tight">
-            Our <span className="text-gradient">Work Process</span>
+
+          <h2 className="titletext font-general font-light text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-[#F8FAFC] tracking-[-0.025em]">
+            Our <span className="bg-gradient-to-r from-[#1457E8] via-[#1268DF] to-[#19B3AC] bg-clip-text text-transparent">Work Process</span>
           </h2>
-          <p className="mt-4 text-slate-600 dark:text-slate-400">
+          <p className="mt-4 text-slate-600 dark:text-[#B8C2D1]">
             A structured, repeatable methodology from initial discovery to high-impact production launch. Click any phase to inspect deliverables.
           </p>
         </div>
@@ -66,18 +64,16 @@ export default function Process() {
                 role="tab"
                 aria-selected={isCurrent}
                 onClick={() => setActiveStepIndex(index)}
-                className={`relative p-7 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
-                  isCurrent
+                className={`relative p-7 rounded-2xl text-left transition-all duration-300 cursor-pointer flex flex-col justify-between focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${isCurrent
                     ? 'bg-white dark:bg-slate-800 border-2 border-blue-500 shadow-xl shadow-blue-500/10 -translate-y-1 scale-[1.02]'
                     : 'bg-white/70 dark:bg-slate-850/60 backdrop-blur-sm border border-slate-200/70 dark:border-slate-800 hover:border-blue-400/60 hover:-translate-y-0.5'
-                }`}
+                  }`}
               >
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <span
-                      className={`text-3xl sm:text-4xl font-black tracking-tighter transition-colors ${
-                        isCurrent ? 'text-blue-600 dark:text-blue-400' : 'text-slate-300 dark:text-slate-700'
-                      }`}
+                      className={`text-3xl sm:text-4xl font-black font-['Space_Grotesk'] tracking-tight transition-colors ${isCurrent ? 'text-blue-600 dark:text-[#3B82F6]' : 'text-slate-300 dark:text-slate-700'
+                        }`}
                     >
                       {item.step}
                     </span>
@@ -86,10 +82,10 @@ export default function Process() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2 flex items-center gap-2">
+                  <h3 className="text-xl font-medium font-general tracking-[-0.025em] text-slate-900 dark:text-[#F8FAFC] mb-2 flex items-center gap-2">
                     <span>{item.title}</span>
                   </h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-[#B8C2D1] leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
@@ -112,7 +108,7 @@ export default function Process() {
           <div>
             <div className="flex items-center gap-2.5 mb-1.5">
               <i className={`fa-solid ${activeStep.icon} text-blue-500 text-lg`} />
-              <h4 className="text-base font-bold text-slate-900 dark:text-white">
+              <h4 className="text-base font-medium font-general tracking-[-0.025em] text-slate-900 dark:text-[#F8FAFC]">
                 Phase {activeStep.step} Quality Gates & Deliverables ({activeStep.title})
               </h4>
             </div>

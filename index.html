@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
+    <!-- Instant Dark Mode Initializer (Zero-Flicker Pre-render Script) -->
+    <script>
+      (function() {
+        try {
+          var saved = localStorage.getItem('theme');
+          var isDark = saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches);
+          if (isDark) document.documentElement.classList.add('dark');
+        } catch (e) {}
+      })();
+    </script>
+    
     <!-- Primary SEO Meta Tags -->
     <title>Prism Infotech — AI-Powered Development Studio | Kota, Rajasthan</title>
     <meta name="title" content="Prism Infotech — AI-Powered Development Studio | Kota, Rajasthan" />
@@ -23,7 +34,7 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://prisminfotech.com/" />
+    <meta property="og:url" content="https://www.prisminfotechsolution.com/" />
     <meta property="og:title" content="Prism Infotech — AI-Powered Development Studio | Kota, Rajasthan" />
     <meta property="og:description" content="Transforming innovative concepts into scalable, revenue-generating digital products. Web, Mobile, AI Chatbots, and Custom Software." />
     <meta property="og:image" content="/logo/logo.png" />
@@ -32,7 +43,7 @@
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://prisminfotech.com/" />
+    <meta property="twitter:url" content="https://www.prisminfotechsolution.com/" />
     <meta property="twitter:title" content="Prism Infotech — AI-Powered Development Studio | Kota, Rajasthan" />
     <meta property="twitter:description" content="Transforming innovative concepts into scalable, revenue-generating digital products." />
     <meta property="twitter:image" content="/logo/logo.png" />
@@ -81,10 +92,12 @@
     }
     </script>
 
-    <!-- Google Fonts: Inter & Outfit -->
+    <!-- Fontshare Fonts: Clash Display, Satoshi, General Sans, Cabinet Grotesk with Light & ExtraLight weights -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&f[]=satoshi@300,400,500,700,900&f[]=general-sans@200,300,400,500,600,700&f[]=cabinet-grotesk@300,400,500,700,800&display=swap" rel="stylesheet" />
+    <!-- Google Fonts: Geist (Vercel), Instrument Serif, Sora, Cormorant Garamond, Syne, Bricolage, Plus Jakarta Sans, Urbanist, Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Geist:wght@200;300;400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Inter:wght@200;300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700&family=Sora:wght@200;300;400;500;600;700&family=Syne:wght@400;500;600;700;800&family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
   </head>

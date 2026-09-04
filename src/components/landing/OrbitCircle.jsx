@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { COMPANY, SERVICES } from '../../data/companyData'
+import { SERVICES } from '../../data/companyData'
 import BrandLogo from '../common/BrandLogo'
 
 export default function OrbitCircle() {
@@ -72,11 +72,8 @@ export default function OrbitCircle() {
         })}
       </div>
 
-      <div className="orbit-center">
-        <BrandLogo large />
-        <div className="text-xs font-bold mt-1 text-[#0B1220] dark:text-slate-200 leading-tight">
-          {COMPANY.name}
-        </div>
+      <div className="orbit-center !p-0 flex items-center justify-center">
+        <BrandLogo className="!w-20 !h-20 sm:!w-24 sm:!h-24 object-contain transition-transform duration-300 hover:scale-105" />
       </div>
     </div>
   )

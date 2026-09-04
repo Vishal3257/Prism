@@ -2,7 +2,7 @@ import PageHeader from '../components/common/PageHeader'
 import Portfolio from '../components/portfolio/Portfolio'
 import Stats from '../components/common/Stats'
 import CTA from '../components/common/CTA'
-
+import SuccessMatra from '../components/portfolio/SuccessMatra'
 export default function PortfolioPage() {
   return (
     <div>
@@ -13,6 +13,8 @@ export default function PortfolioPage() {
         breadcrumb="Portfolio"
       />
       <Portfolio />
+      <SuccessMatra />
+
       <Stats />
       <CTA />
     </div>
