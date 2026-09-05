@@ -1,132 +1,138 @@
-import { Target, Eye, Gem } from 'lucide-react';
-import heroBackground from '/about/about-right-part.png';
+import React from 'react'
 
-const pillars = [
+const FEATURES = [
     {
-        icon: Target,
-        title: "Our Mission",
-        description:
-            "To deliver innovative IT solutions that help businesses grow and succeed in the digital era.",
+        title: 'Custom Software',
+        description: 'Built for your unique business needs',
+        icon: (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+                <path d="M12 3 20 7v10l-8 4-8-4V7l8-4Z" />
+                <path d="m4 7 8 4 8-4M12 11v10" />
+            </svg>
+        ),
     },
     {
-        icon: Eye,
-        title: "Our Vision",
-        description:
-            "To be a global leader in IT services recognized for innovation, quality, and customer success.",
+        title: 'Secure & Scalable',
+        description: 'Enterprise-grade security that grows with you',
+        icon: (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+                <path d="M12 3 19 6v5c0 4.7-2.8 8.3-7 10-4.2-1.7-7-5.3-7-10V6l7-3Z" />
+                <path d="m9 12 2 2 4-4" />
+            </svg>
+        ),
     },
     {
-        icon: Gem,
-        title: "Our Values",
-        description:
-            "Integrity, innovation, commitment, and excellence in everything we do.",
+        title: 'Modern & Future-Ready',
+        description: "Cutting-edge technology for tomorrow's challenges",
+        icon: (
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-6 w-6">
+                <path d="m14 4 6 6-8.5 8.5L8 19l-1-3.5L15.5 7 14 4Z" />
+                <path d="m13 5 6 6" />
+                <path d="M5 21h4" />
+                <path d="m3 13 2-2" />
+                <path d="M11 3V1" />
+            </svg>
+        ),
     },
-];
+]
 
-function AboutHero() {
+export default function AboutHero() {
     return (
-        <section
-            id="about-hero"
-            className="w-full overflow-hidden bg-[#F7F9FC] transition-colors duration-300 dark:bg-[#060B14]"
-        >
-            {/* Two-column grid: left = text, right = image */}
-            <div className="w-full flex flex-col lg:flex-row lg:items-stretch">
+        <section className="relative isolate overflow-hidden bg-[var(--color-section-bg)]">
+            {/* Background Grid */}
+            <div
+                className="pointer-events-none absolute inset-0 -z-10 opacity-70
+                    [background-image:linear-gradient(to_right,color-mix(in_srgb,var(--color-border)_60%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--color-border)_60%,transparent)_1px,transparent_1px)]
+                    [background-size:38px_38px]"
+            />
 
-                {/* ===== LEFT: Text Content ===== */}
-                <div className="relative flex flex-1 flex-col justify-center
-                        px-5 py-3
-                        sm:px-10 sm:py-4
-                        md:px-5
-                        lg:min-h-[calc(100vh-12rem)] lg:max-h-[820px]
-                        lg:py-5 lg:pl-16 lg:pr-10
-                        xl:pl-6 xl:pr-12
-                        2xl:pl-28">
+            {/* Soft Blue Glow */}
+            <div className="pointer-events-none absolute left-[10%] top-0 -z-10 h-[420px] w-[420px] rounded-full bg-[var(--color-primary-blue)]/10 blur-[110px]" />
+            {/* Soft Teal Glow */}
+            <div className="pointer-events-none absolute right-[-100px] top-1/4 -z-10 h-[340px] w-[340px] rounded-full bg-[var(--color-teal-accent)]/10 blur-[110px]" />
 
-                    {/* Eyebrow / Tagline */}
-                    <div className="mb-2.5 sm:mb-3">
-                        <span className="font-sans text-xs sm:text-[13px] font-extrabold tracking-[0.16em] text-[#2563EB] uppercase dark:text-[#3B82F6]">
-                            ABOUT US
-                        </span>
-                    </div>
+            <div className="mx-auto max-w-[1400px] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-20">
 
-                    {/* Main Headline */}
-                    <h1 className="mb-3 font-general font-light text-3xl leading-[1.15] tracking-[-0.025em] text-[#0B1220]
-                         sm:text-4xl
-                         md:text-5xl
-                         lg:text-[42px]
-                         xl:text-[48px]
-                         2xl:text-[52px]
-                         dark:text-[#F8FAFC]">
-                        Driven by Innovation. <br />
-                        Focused on <span className="text-[#2563EB] dark:text-[#3B82F6]">Your Success.</span>
+                {/* Heading row with inline pill images */}
+                <div className="flex flex-col gap-1">
+                    <h1 className="font-general font-light text-[clamp(2.4rem,6.5vw,5rem)] leading-[0.98] tracking-[-0.025em] text-[var(--color-headings)]">
+                        Built to
                     </h1>
 
-                    {/* Accent Line under heading */}
-                    <div className="mb-4 h-[3px] w-12 rounded-full bg-gradient-to-r from-[#2563EB] to-[#35B8A5] dark:from-[#3B82F6] dark:to-[#42C7B5] sm:mb-5" />
+                    <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                        <h1 className="font-general font-light text-[clamp(2.4rem,6.5vw,5rem)] leading-[0.98] tracking-[-0.025em] text-[var(--color-headings)]">
+                            turn ideas
+                        </h1>
 
-                    {/* Description Paragraph */}
-                    <p className="mb-8 max-w-xl font-satoshi text-sm font-light leading-relaxed text-[#475569]
-                        sm:text-[15px]
-                        lg:text-[14.5px]
-                        xl:text-[15.5px]
-                        dark:text-[#B8C2D1]">
-                        At Prism Infotech Solution, we empower businesses with smart IT solutions that drive growth, improve efficiency, and create long-term value.
-                    </p>
+                        <div className="hidden h-[60px] w-[185px] shrink-0 overflow-hidden rounded-full border border-[var(--color-border)] shadow-lg shadow-slate-900/10 sm:block lg:h-[74px] lg:w-[240px]">
+                            <img src="/about/img1.png" alt="Team collaboration" className="h-full w-full object-cover" />
+                        </div>
 
-                    {/* 3 Pillars / Feature Columns */}
-                    <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-5 lg:gap-6 pt-1">
-                        {pillars.map((item) => {
-                            const Icon = item.icon;
-                            return (
-                                <div
-                                    key={item.title}
-                                    className="group flex flex-col items-start rounded-2xl p-3 -m-3 transition-colors duration-300 hover:bg-[#EEF4FF] dark:hover:bg-[#101A2B]"
-                                >
-                                    {/* Rounded Icon Box */}
-                                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#EEF4FF] text-[#2563EB] shadow-sm transition-colors duration-300 group-hover:bg-[#2563EB] group-hover:text-white dark:bg-[#101A2B] dark:text-[#3B82F6] dark:group-hover:bg-[#3B82F6] dark:group-hover:text-[#060B14] sm:h-12 sm:w-12">
-                                        <Icon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={2.2} />
-                                    </div>
-
-                                    {/* Title */}
-                                    <h3 className="mt-3.5 font-general font-medium text-[15px] tracking-[-0.025em] text-[#0B1220] dark:text-[#F8FAFC] sm:text-[16px]">
-                                        {item.title}
-                                    </h3>
-
-                                    {/* Description */}
-                                    <p className="mt-1.5 font-satoshi text-[12px] font-light leading-[1.6] text-[#7C8799] dark:text-[#77859A] sm:text-[12.5px]">
-                                        {item.description}
-                                    </p>
-                                </div>
-                            );
-                        })}
+                        <div className="hidden h-[60px] w-[185px] shrink-0 overflow-hidden rounded-full border border-[var(--color-border)] shadow-lg shadow-slate-900/10 sm:block lg:h-[74px] lg:w-[240px]">
+                            <img src="/about/img2.png" alt="Team working together" className="h-full w-full object-cover" />
+                        </div>
                     </div>
 
-                    {/* Decorative Dot Matrix (Subtle) */}
-                    <div className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 grid-cols-3 gap-2 opacity-30 xl:grid">
-                        {Array.from({ length: 18 }).map((_, i) => (
-                            <span key={i} className="h-1 w-1 rounded-full bg-[#2563EB] dark:bg-[#3B82F6]" />
-                        ))}
+                    <h1 className="font-general font-light text-[clamp(2.4rem,6.5vw,5rem)] leading-[0.98] tracking-[-0.025em] text-[var(--color-headings)]">
+                        into digital
+                    </h1>
+
+                    <div className="flex flex-wrap items-center gap-6">
+                        <h1 className="text-gradient font-general font-light text-[clamp(2.4rem,6.5vw,5rem)] leading-[0.98] tracking-[-0.025em]">
+                            experiences
+                        </h1>
+
+                        {/* Circle graphic + connecting line */}
+                        <div className="relative hidden items-center md:flex">
+                            <div className="h-px w-16 bg-[var(--color-border)] lg:w-50" />
+                            <div className="relative flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-[var(--color-border)] bg-[var(--color-card-bg)] shadow-sm lg:h-20 lg:w-20">
+                                <div className="bg-gradient-primary absolute right-0 top-0 h-full w-1/2 rounded-r-full" />
+                                <div className="relative h-7 w-7 rounded-full bg-[var(--color-card-bg)] lg:h-9 lg:w-9" />
+                            </div>
+                            <svg width="16" height="16" viewBox="0 0 18 18" fill="none" className="ml-1 text-[var(--color-muted)]">
+                                <path d="M3 9H15M15 9L10.5 4.5M15 9L10.5 13.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
                     </div>
 
+                    {/* Mobile Images (shown below heading on small screens) */}
+                    <div className="mt-4 grid grid-cols-2 gap-3 sm:hidden">
+                        <div className="h-24 overflow-hidden rounded-full">
+                            <img src="/about/img1.png" alt="Team collaboration" className="h-full w-full object-cover" />
+                        </div>
+                        <div className="h-24 overflow-hidden rounded-full">
+                            <img src="/about/img2.png" alt="Team collaboration" className="h-full w-full object-cover" />
+                        </div>
+                    </div>
                 </div>
 
-                {/* ===== RIGHT: Hero Image ===== */}
-                <div
-                    className="relative hidden w-full overflow-hidden border-l border-[#E4E9F0] dark:border-[#1D2A3D]
-                     lg:block lg:h-auto lg:min-h-full lg:w-[52%] lg:shrink-0
-                     xl:w-[50%]"
-                >
-                    <img
-                        src={heroBackground}
-                        alt="Prism Infotech About Us"
-                        className="h-full w-full object-fill"
-                    />
-                    {/* subtle gradient fade at the seam for a more premium blend with the text side */}
-                    <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#F7F9FC] to-transparent dark:from-[#060B14]" />
-                </div>
+                {/* Description */}
+                <p className="font-satoshi font-light mt-8 max-w-2xl text-base leading-relaxed text-[var(--color-body)] sm:text-lg">
+                    We are a team of developers, designers, and problem solvers passionate about building scalable, secure, and future-ready digital solutions that drive real business impact.
+                </p>
 
+                {/* Features */}
+                <div className="mt-12 grid border-t border-[var(--color-border)] pt-8 sm:grid-cols-3">
+                    {FEATURES.map((feature, index) => (
+                        <div
+                            key={feature.title}
+                            className={`flex items-start gap-4 py-5 sm:px-6 sm:py-2 ${
+                                index !== 0 ? 'border-t border-[var(--color-border)] sm:border-l sm:border-t-0' : ''
+                            }`}
+                        >
+                            <div className="shrink-0 text-[var(--color-primary-blue)]">{feature.icon}</div>
+                            <div>
+                                <h3 className="font-general font-medium text-sm text-[var(--color-headings)] sm:text-base tracking-[-0.025em]">
+                                    {feature.title}
+                                </h3>
+                                <p className="font-satoshi font-light mt-1 text-xs leading-relaxed text-[var(--color-muted)] sm:text-sm">
+                                    {feature.description}
+                                </p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
         </section>
-    );
+    )
 }
-
-export default AboutHero;

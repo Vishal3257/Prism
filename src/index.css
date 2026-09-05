@@ -181,40 +181,13 @@ body {
   color: #B8C2D1;
 }
 
-/* Universal Smooth Transition for UI Surface & Colors during Theme Switch */
-body,
-#root,
+/* Safe Theme Transition for Top-Level Layout Surfaces Only (Never target div, article, a, button) */
 nav,
-header,
-main,
 section,
-footer,
-article,
-aside,
-div,
-p,
-span,
-h1, h2, h3, h4, h5, h6,
-a,
-button,
-input,
-textarea {
-  transition-property: background-color, border-color, color, box-shadow;
-  transition-duration: 0.4s;
+footer {
+  transition-property: background-color, border-color;
+  transition-duration: 0.3s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Protect animations from transition lag */
-.orbit-container,
-.orbit-ring,
-.orbit-ring-inner,
-.orbit-item,
-.orbit-item-content,
-.marquee-track,
-[class*="animate-spin"],
-[class*="animate-pulse"],
-[class*="animate-marquee"] {
-  transition-property: background-color, border-color, color !important;
 }
 
 h1,
@@ -554,5 +527,5 @@ h6 {
 }
 
 .animate-card-enter {
-  animation: card-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: card-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }

@@ -88,6 +88,13 @@ export default function SuccessMantra() {
                                 onKeyDown={(event) =>
                                     handleKeyDown(event, index)
                                 }
+                                style={{
+                                    flex: hasActivePanel
+                                        ? isActive
+                                            ? '4.5 1 0%'
+                                            : '0.7 1 0%'
+                                        : '1 1 0%',
+                                }}
                                 className={`
                                     relative
                                     min-w-0
@@ -104,9 +111,9 @@ export default function SuccessMantra() {
 
                                     ${hasActivePanel
                                         ? isActive
-                                            ? 'lg:flex-[4.5] flex-[4] min-h-[380px] lg:min-h-0 ring-2 ring-blue-500/50'
-                                            : 'lg:flex-[0.7] flex-1 min-h-[96px] lg:min-h-0'
-                                        : 'lg:flex-1 flex-1 min-h-[96px] lg:min-h-0'
+                                            ? 'min-h-[380px] lg:min-h-0 ring-2 ring-blue-500/50'
+                                            : 'min-h-[96px] lg:min-h-0'
+                                        : 'min-h-[96px] lg:min-h-0'
                                     }
                                 `}
                             >
@@ -116,7 +123,9 @@ export default function SuccessMantra() {
                                     alt={panel.title}
                                     loading="lazy"
                                     draggable={false}
-                                    className="absolute inset-0 h-full w-full object-cover object-center"
+                                    className={`absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                                        isActive ? 'scale-105' : 'scale-100'
+                                    }`}
                                 />
 
                                 {/* Dark Overlay */}
@@ -137,45 +146,44 @@ export default function SuccessMantra() {
                                 {/* Vertical / Rotating Title */}
                                 <div
                                     className={`
-        absolute
-        bottom-0
-        left-0
-        z-20
-        flex
-        h-14
-        origin-bottom-left
-        items-center
-        justify-center
-        overflow-hidden
-        rounded-t-xl
-        bg-gradient-to-r
-        from-[#1457E8]
-        via-[#1268DF]
-        to-[#19B3AC]
-        transition-transform
-        duration-700
-        ease-[cubic-bezier(0.22,1,0.36,1)]
-        ${isActive
+                                        absolute
+                                        bottom-0
+                                        left-0
+                                        z-20
+                                        flex
+                                        h-14
+                                        origin-bottom-left
+                                        items-center
+                                        justify-center
+                                        overflow-hidden
+                                        rounded-t-xl
+                                        bg-gradient-to-r
+                                        from-[#1457E8]
+                                        via-[#1268DF]
+                                        to-[#19B3AC]
+                                        transition-all
+                                        duration-700
+                                        ease-[cubic-bezier(0.22,1,0.36,1)]
+                                        ${isActive
                                             ? 'w-full rotate-0 translate-x-0'
                                             : 'w-36 -rotate-90 translate-x-14'
                                         }
-    `}
+                                    `}
                                 >
                                     <span
                                         className="
-            whitespace-nowrap
-            font-display
-            text-sm
-            font-bold
-            uppercase
-            tracking-[0.2em]
-            text-white
-        "
+                                            whitespace-nowrap
+                                            font-general
+                                            text-sm
+                                            font-bold
+                                            uppercase
+                                            tracking-[0.2em]
+                                            text-white
+                                        "
                                     >
                                         {panel.title}
                                     </span>
                                 </div>
-
 
                                 {/* Active Content */}
                                 <div
@@ -188,7 +196,7 @@ export default function SuccessMantra() {
                                         justify-start
                                         border
                                         border-white/15
-                                        bg-black/10
+                                        bg-black/20
                                         p-6
                                         pt-8
                                         backdrop-blur-md
@@ -204,10 +212,8 @@ export default function SuccessMantra() {
                                     `}
                                 >
                                     <div className="max-w-lg">
-
-                                       
                                         {/* Description */}
-                                        <p className="text-sm leading-relaxed text-slate-200 dark:text-[#B8C2D1] sm:text-base">
+                                        <p className="font-satoshi font-light text-sm leading-relaxed text-slate-200 dark:text-[#B8C2D1] sm:text-base">
                                             {panel.description}
                                         </p>
                                     </div>
