@@ -56,7 +56,7 @@ export default function ServiceHero() {
     }, [])
 
     return (
-        <section className="relative isolate min-h-[720px] overflow-hidden">
+        <section className="relative isolate min-h-[440px] overflow-hidden sm:min-h-[500px] lg:min-h-[560px]">
             {/* Full Background Image */}
             <img
                 src={HERO_IMAGE}
@@ -68,13 +68,14 @@ export default function ServiceHero() {
             <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-slate-950/25" />
             <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/70 via-transparent to-slate-950/10" />
 
-            <div className="relative z-10 mx-auto flex min-h-[720px] max-w-7xl flex-col justify-center px-5 py-2 sm:px-8 sm:py-4 lg:px-10 lg:py-5">
+            <div className="relative z-10 mx-auto flex min-h-[440px] max-w-7xl flex-col justify-center px-5 py-10 sm:min-h-[500px] sm:px-8 sm:py-12 lg:min-h-[560px] lg:px-10 lg:py-14">
 
                 {/* LEFT CONTENT */}
                 <div className="max-w-2xl">
                     {/* Eyebrow */}
-                    <div className="mb-2 inline-flex items-center p-2 gap-2 rounded-full border border-white/20 bg-white/10 px-4 text-sm font-medium text-white backdrop-blur-md">
-                         Digital Solutions For Modern Business
+                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md">
+                        <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-[var(--color-teal-accent)]" />
+                        Digital Solutions For Modern Business
                     </div>
 
                     {/* Heading — animates on service change */}
@@ -90,13 +91,13 @@ export default function ServiceHero() {
                         </h1>
 
                         {/* Description */}
-                        <p className="font-sans mt-2 max-w-xl text-base font-light leading-8 text-white/75 sm:text-lg">
+                        <p className="font-sans mt-5 max-w-xl text-base font-light leading-8 text-white/75 sm:text-lg">
                             {activeService.description}
                         </p>
                     </div>
 
                     {/* CTA */}
-                    <div className="mt-9 flex flex-wrap items-center gap-4">
+                    <div className="mt-8 flex flex-wrap items-center gap-4">
                         <button className="bg-gradient-primary inline-flex items-center gap-3 rounded-full px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-950/40 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl">
                             Explore Services
                             <i className="fa-solid fa-arrow-right text-xs" />
@@ -108,7 +109,7 @@ export default function ServiceHero() {
                     </div>
 
                     {/* Service Progress */}
-                    <div className="mt-12 flex max-w-xl items-center gap-2">
+                    <div className="mt-9 flex max-w-xl items-center gap-2">
                         {SERVICES.map((service, index) => (
                             <button
                                 key={service.title}
@@ -135,14 +136,12 @@ export default function ServiceHero() {
                     </div>
                 </div>
 
-                
-
                 {/* Bottom-right Service Label */}
                 <div
                     key={`label-${activeIndex}`}
-                    className="absolute bottom-10 right-6 z-20 hidden animate-[fadeIn_0.5s_ease] items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-5 py-4 backdrop-blur-md sm:flex xl:right-14"
+                    className="absolute bottom-8 right-6 z-20 hidden animate-[fadeIn_0.5s_ease] items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-5 py-3.5 backdrop-blur-md sm:flex xl:right-14"
                 >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white">
+                    <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white">
                         <i className={`fa-solid ${activeService.icon}`} />
                     </div>
                     <div>

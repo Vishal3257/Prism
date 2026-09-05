@@ -8,7 +8,7 @@ import FloatingWhatsApp from './components/common/FloatingWhatsApp'
 import Home from './pages/Home'
 import AboutPage from './pages/AboutPage'
 import ServicesPage from './pages/ServicesPage'
-import IndustriesPage from './pages/IndustriesPage'
+import CareerPages from './pages/CareerPages'
 import PortfolioPage from './pages/PortfolioPage'
 import TestimonialsPage from './pages/TestimonialsPage'
 import ContactPage from './pages/ContactPage'
@@ -26,7 +26,7 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/services" element={<ServicesPage />} />
-                <Route path="/industries" element={<IndustriesPage />} />
+                <Route path="/Careers" element={<CareerPages />} />
                 <Route path="/portfolio" element={<PortfolioPage />} />
                 <Route path="/testimonials" element={<TestimonialsPage />} />
                 <Route path="/contact" element={<ContactPage />} />

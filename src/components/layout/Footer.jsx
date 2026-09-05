@@ -13,8 +13,8 @@ export default function Footer() {
   ]
 
   return (
-    <footer className="bg-slate-950 text-slate-400 pt-12 sm:pt-16 pb-14 sm:pb-8 border-t border-slate-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-slate-950 text-slate-400 pt-10 sm:pt-7  sm:pb-2 border-t border-slate-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-4">
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 lg:gap-10 mb-12">
           {/* Brand Info */}
           <div className="col-span-2 md:col-span-1 lg:col-span-4">
