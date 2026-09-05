@@ -38,7 +38,7 @@ const FEATURES = [
 
 export default function AboutHero() {
     return (
-        <section className="relative isolate overflow-hidden bg-[var(--color-section-bg)]">
+        <section data-cursor="hero" className="relative isolate overflow-hidden bg-[var(--color-section-bg)]">
             {/* Background Grid */}
             <div
                 className="pointer-events-none absolute inset-0 -z-10 opacity-70

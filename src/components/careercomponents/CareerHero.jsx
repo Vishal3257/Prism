@@ -103,7 +103,7 @@ export default function CareerHero() {
   }
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#F7F9FC] dark:bg-[#060B14] py-8 sm:py-10 lg:py-12 transition-colors duration-300">
+    <section data-cursor="hero" className="relative isolate overflow-hidden bg-[#F7F9FC] dark:bg-[#060B14] py-8 sm:py-10 lg:py-12 transition-colors duration-300">
       {/* Background Grid Pattern */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 opacity-50 dark:opacity-25

@@ -56,7 +56,7 @@ export default function ServiceHero() {
     }, [])
 
     return (
-        <section className="relative isolate min-h-[440px] overflow-hidden sm:min-h-[500px] lg:min-h-[560px]">
+        <section data-cursor="hero" className="relative isolate min-h-[440px] overflow-hidden sm:min-h-[500px] lg:min-h-[560px]">
             {/* Full Background Image */}
             <img
                 src={HERO_IMAGE}

@@ -67,7 +67,7 @@ export default function PortfolioHero() {
   }, [isPaused])
 
   return (
-    <section className="relative isolate overflow-hidden bg-[var(--color-section-bg)] transition-colors duration-300">
+    <section data-cursor="hero" className="relative isolate overflow-hidden bg-[var(--color-section-bg)] transition-colors duration-300">
       {/* Background Grid */}
       <div
         className="pointer-events-none absolute inset-0 -z-20 opacity-60

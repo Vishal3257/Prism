@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export default function PageHeader({ title, subtitle, badge, breadcrumb }) {
   return (
-    <section className="relative pt-20 pb-10 sm:pt-24 sm:pb-14 overflow-hidden bg-gradient-to-b from-[#F7F9FC] to-[#FFFFFF] dark:from-slate-950 dark:to-slate-900 border-b border-[#E4E9F0] dark:border-slate-800 transition-colors duration-300">
+    <section data-cursor="hero" className="relative pt-20 pb-10 sm:pt-24 sm:pb-14 overflow-hidden bg-gradient-to-b from-[#F7F9FC] to-[#FFFFFF] dark:from-slate-950 dark:to-slate-900 border-b border-[#E4E9F0] dark:border-slate-800 transition-colors duration-300">
       {/* Glow Effects */}
       <div className="absolute top-10 left-1/4 w-80 h-80 bg-[#2563EB]/10 dark:bg-blue-600/15 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-5 right-1/4 w-80 h-80 bg-[#35B8A5]/10 dark:bg-teal-500/15 rounded-full blur-3xl pointer-events-none -z-10" />

@@ -9,6 +9,7 @@ export default function Hero() {
   return (
     <section
       id="home"
+      data-cursor="hero"
       className="relative pt-2 pb-12 sm:pt-4 sm:pb-14 lg:pt-4 lg:pb-4 overflow-hidden bg-[#F7F9FC] dark:bg-slate-950 transition-colors duration-400"
     >
       {/* Ambient background glows using Primary Brand (#2563EB) & Teal Accent (#35B8A5) */}
