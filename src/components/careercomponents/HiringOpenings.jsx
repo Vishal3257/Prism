@@ -19,15 +19,15 @@ const OPENINGS = [
     icon: 'fa-bullhorn',
     department: 'Digital Marketing',
   },
-  {
+{
     id: '03',
-    title: 'AI Integration Developer',
-    type: 'Internship',
+    title: 'Business Development Associate',
+    type: 'Full-time',
     seats: '01 Seat',
-    experience: 'Fresher',
-    icon: 'fa-brain',
-    department: 'AI & GenAI',
-  },
+    experience: '0–2 Years',
+    icon: 'fa-handshake',
+    department: 'Business Development',
+},
 ]
 
 export default function HiringOpenings() {
