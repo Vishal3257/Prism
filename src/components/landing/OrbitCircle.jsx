@@ -6,7 +6,6 @@ export default function OrbitCircle() {
   const containerRef = useRef(null)
   const [radius, setRadius] = useState(170)
   const [isMobile, setIsMobile] = useState(false)
-  const [activeItem, setActiveItem] = useState(null)
 
   const orbitServices = [
     'Website Development',
@@ -149,8 +148,6 @@ export default function OrbitCircle() {
                   handleServiceClick()
                 }
               }}
-              onMouseEnter={() => setActiveItem(item.name)}
-              onMouseLeave={() => setActiveItem(null)}
               className="orbit-item group"
               style={{
                 // Position via CSS variables instead of a direct `transform: translate(...)`.

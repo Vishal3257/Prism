@@ -1,4 +1,3 @@
-import PageHeader from '../components/common/PageHeader'
  
 import CTA from '../components/common/CTA'
 import TestimonialHero from '../components/testimonials/TestimonialHero'
@@ -10,8 +9,6 @@ export default function TestimonialsPage() {
       <TestimonialHero />
       <Testimonials />
       <CaseStudyShowcase />
-     
-  
       <CTA />
     </div>
   )

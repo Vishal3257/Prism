@@ -31,11 +31,9 @@ export default function Testimonials() {
   const maxIndex = Math.max(0, total - visibleCount)
 
   // Ensure current index stays within valid range when resizing
-  useEffect(() => {
-    if (currentIndex > maxIndex) {
-      setCurrentIndex(maxIndex)
-    }
-  }, [maxIndex, currentIndex])
+  if (currentIndex > maxIndex) {
+    setCurrentIndex(maxIndex)
+  }
 
   const next = useCallback(() => {
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))

@@ -1,7 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 
 export default function GlassCursor() {
-  const [isTouchDevice, setIsTouchDevice] = useState(false)
+  const [isTouchDevice] = useState(() => {
+    return (
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window || navigator.maxTouchPoints > 0)
+    )
+  })
 
   const ringRef = useRef(null)
   const dotRef = useRef(null)
@@ -17,13 +22,7 @@ export default function GlassCursor() {
 
   useEffect(() => {
     // Disable on touch / mobile devices where mouse hover does not exist
-    if (
-      typeof window !== 'undefined' &&
-      ('ontouchstart' in window || navigator.maxTouchPoints > 0)
-    ) {
-      setIsTouchDevice(true)
-      return
-    }
+    if (isTouchDevice) return
 
     let stopTimer = null
 
@@ -122,7 +121,7 @@ export default function GlassCursor() {
       document.body.removeEventListener('mouseleave', handleMouseLeave)
       cancelAnimationFrame(animationId)
     }
-  }, [])
+  }, [isTouchDevice])
 
   if (isTouchDevice) return null
 

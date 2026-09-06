@@ -1,4 +1,3 @@
-import { COMPANY } from '../../data/companyData'
 
 const OPENINGS = [
  

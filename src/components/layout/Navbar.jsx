@@ -12,11 +12,12 @@ const Navbar = () => {
   const location = useLocation();
   const { dark, toggle } = useTheme();
 
-  // Close dropdowns on route navigation
-  useEffect(() => {
+  const [prevPath, setPrevPath] = useState(location.pathname);
+  if (prevPath !== location.pathname) {
+    setPrevPath(location.pathname);
     setServicesOpen(false);
     setMobileMenuOpen(false);
-  }, [location.pathname]);
+  }
 
   // Clean up timer
   useEffect(() => {
