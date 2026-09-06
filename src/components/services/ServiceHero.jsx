@@ -68,15 +68,12 @@ export default function ServiceHero() {
             <div className="absolute inset-0 -z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/60 to-slate-950/25" />
             <div className="absolute inset-0 -z-10 bg-gradient-to-t from-slate-950/70 via-transparent to-slate-950/10" />
 
-            <div className="relative z-10 mx-auto flex min-h-[440px] max-w-7xl flex-col justify-center px-5 py-10 sm:min-h-[500px] sm:px-8 sm:py-12 lg:min-h-[560px] lg:px-10 lg:py-14">
+            <div className="relative z-10 mx-auto flex min-h-[440px] max-w-7xl flex-col justify-center px-5 py-10 sm:min-h-[500px] sm:px-8 sm:py-12 lg:min-h-[560px] lg:px-10 lg:py-3">
 
                 {/* LEFT CONTENT */}
                 <div className="max-w-2xl">
                     {/* Eyebrow */}
-                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md">
-                        <span className="h-1.5 w-1.5 shrink-0 animate-pulse rounded-full bg-[var(--color-teal-accent)]" />
-                        Digital Solutions For Modern Business
-                    </div>
+                    
 
                     {/* Heading — animates on service change */}
                     <div key={`heading-${activeIndex}`} className="animate-[fadeIn_0.6s_ease]">

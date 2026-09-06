@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="bc-grad1" x1="20" y1="20" x2="100" y2="100" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="50%" stop-color="#6366F1"/>
+      <stop offset="100%" stop-color="#35B8A5"/>
+    </linearGradient>
+    <linearGradient id="bc-top" x1="60" y1="16" x2="60" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#60A5FA"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="bc-left" x1="26" y1="44" x2="60" y2="94" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#1D4ED8"/>
+    </linearGradient>
+    <linearGradient id="bc-right" x1="94" y1="44" x2="60" y2="94" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#35B8A5"/>
+      <stop offset="100%" stop-color="#0D9488"/>
+    </linearGradient>
+    <filter id="bc-glow" x="0" y="0" width="120" height="120" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient background glow -->
+  <circle cx="60" cy="60" r="42" fill="url(#bc-grad1)" opacity="0.18" filter="url(#bc-glow)"/>
+
+  <!-- Decentralized connecting nodes and links -->
+  <circle cx="22" cy="36" r="6" fill="#60A5FA" opacity="0.8"/>
+  <circle cx="98" cy="36" r="6" fill="#35B8A5" opacity="0.8"/>
+  <circle cx="22" cy="84" r="6" fill="#3B82F6" opacity="0.8"/>
+  <circle cx="98" cy="84" r="6" fill="#2DD4BF" opacity="0.8"/>
+
+  <!-- Link dashed tracks -->
+  <path d="M22 36L46 44M98 36L74 44M22 84L46 76M98 84L74 76" stroke="url(#bc-grad1)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="3 3" opacity="0.7"/>
+
+  <!-- Central Isometric 3D Blockchain Cube -->
+  <!-- Top Face -->
+  <polygon points="60,20 90,37 60,54 30,37" fill="url(#bc-top)"/>
+  <!-- Left Face -->
+  <polygon points="30,37 60,54 60,88 30,71" fill="url(#bc-left)"/>
+  <!-- Right Face -->
+  <polygon points="60,54 90,37 90,71 60,88" fill="url(#bc-right)"/>
+
+  <!-- Inner Cube Grid Lines for High-tech Texture -->
+  <path d="M60 20L60 54M30 37L60 54M90 37L60 54" stroke="#FFFFFF" stroke-width="1.5" stroke-opacity="0.5"/>
+
+  <!-- Core Glowing Token Mark in center -->
+  <circle cx="60" cy="54" r="7" fill="#FFFFFF" opacity="0.95" filter="url(#bc-glow)"/>
+  <circle cx="60" cy="54" r="3.5" fill="#2563EB"/>
+</svg>

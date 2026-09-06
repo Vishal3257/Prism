@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useMemo } from 'react'
 import { COMPANY } from '../../data/companyData'
 
 const JOB_ROLES = [
@@ -13,6 +13,18 @@ const JOB_ROLES = [
   'Database Engineer',
   'Internship',
   'Other',
+]
+
+const inputClass =
+  'font-satoshi w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs sm:text-sm text-[#0B1220] placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#2563EB] dark:border-slate-700/80 dark:bg-[#0A1220] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-[#3B82F6] dark:focus:ring-[#3B82F6] transition-colors'
+
+const labelClass =
+  'font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200'
+
+const STATS = [
+  { value: '20+', label: 'Team members' },
+  { value: '50+', label: 'Projects done' },
+  { value: '100%', label: 'Growth mindset' },
 ]
 
 export default function CareerHero() {
@@ -37,17 +49,13 @@ export default function CareerHero() {
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0]
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        setStatus({
-          type: 'error',
-          message: 'Resume file size should be less than 5MB.',
-        })
-        return
-      }
-      setResumeFile(file)
-      setStatus({ type: '', message: '' })
+    if (!file) return
+    if (file.size > 5 * 1024 * 1024) {
+      setStatus({ type: 'error', message: 'Resume file size should be less than 5MB.' })
+      return
     }
+    setResumeFile(file)
+    setStatus({ type: '', message: '' })
   }
 
   const handleRemoveFile = (e) => {
@@ -60,10 +68,7 @@ export default function CareerHero() {
     e.preventDefault()
 
     if (!formData.name.trim() || !formData.email.trim() || !formData.contact.trim()) {
-      setStatus({
-        type: 'error',
-        message: 'Please fill in all required fields (*).',
-      })
+      setStatus({ type: 'error', message: 'Please fill in all required fields (*).' })
       return
     }
 
@@ -74,20 +79,13 @@ export default function CareerHero() {
         type: 'success',
         message: 'Application received! Our recruitment team will review your profile shortly.',
       })
-      setFormData({
-        name: '',
-        email: '',
-        contact: '',
-        location: '',
-        role: '',
-        message: '',
-      })
+      setFormData({ name: '', email: '', contact: '', location: '', role: '', message: '' })
       setResumeFile(null)
       if (fileInputRef.current) fileInputRef.current.value = ''
     }, 800)
   }
 
-  const handleApplyWhatsApp = () => {
+  const whatsappUrl = useMemo(() => {
     const text =
       `*Job Application - Prism Infotech*\n\n` +
       `👤 *Name:* ${formData.name || 'Not provided'}\n` +
@@ -97,113 +95,93 @@ export default function CareerHero() {
       `💼 *Role:* ${formData.role || 'General Application'}\n` +
       `📄 *Resume:* ${resumeFile ? resumeFile.name : 'Attached on request'}\n` +
       `💬 *Note:* ${formData.message || 'Looking forward to hearing from you!'}`
+    return `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(text)}`
+  }, [formData, resumeFile])
 
-    const url = `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(text)}`
-    window.open(url, '_blank')
-  }
+  const handleApplyWhatsApp = () => window.open(whatsappUrl, '_blank')
 
   return (
-    <section data-cursor="hero" className="relative isolate overflow-hidden bg-[#F7F9FC] dark:bg-[#060B14] py-8 sm:py-10 lg:py-12 transition-colors duration-300">
-      {/* Background Grid Pattern */}
+    <section
+      data-cursor="hero"
+      className="relative isolate overflow-hidden bg-[#F7F9FC] dark:bg-[#060B14] py-8 sm:py-10 lg:py-12 transition-colors duration-300"
+    >
+      {/* Background grid pattern */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 opacity-50 dark:opacity-25
           [background-image:linear-gradient(to_right,rgba(148,163,184,0.15)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.15)_1px,transparent_1px)]
           [background-size:32px_32px]"
       />
 
-      {/* Brand Ambient Glows */}
+      {/* Ambient glows */}
       <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-72 w-72 rounded-full bg-[#2563EB]/10 dark:bg-blue-600/15 blur-3xl" />
       <div className="pointer-events-none absolute -right-20 bottom-10 -z-10 h-72 w-72 rounded-full bg-[#35B8A5]/12 dark:bg-teal-500/15 blur-3xl" />
 
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 xl:gap-14">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-2">
+        <div className="grid items-start gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 xl:gap-8">
           {/* ================= LEFT COLUMN ================= */}
-          <div className="flex flex-col justify-center">
-            {/* Pill Eyebrow Badge */}
+          <div className="flex flex-col justify-start lg:-mt-4 xl:-mt-6">
+            {/* Eyebrow badge */}
             <div className="mb-4 inline-flex items-center gap-2">
-              <span className="font-satoshi inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#2563EB] shadow-xs dark:border-blue-900/50 dark:bg-blue-950/40 dark:text-blue-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#35B8A5] animate-pulse" />
+              <span className="font-satoshi inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-semibold text-[#2563EB] shadow-xs dark:border-blue-900/50 dark:bg-blue-950/40 dark:text-blue-300">
                 Careers at Prism
               </span>
             </div>
 
-            {/* Main Headline (Scaled according to AboutHero.jsx) */}
+            {/* Headline */}
             <h1 className="font-general font-light text-[clamp(2.4rem,5vw,4.25rem)] leading-[1.02] tracking-[-0.025em] text-[#0B1220] dark:text-[#F8FAFC]">
               Join our team <br className="hidden sm:inline" />
-              <span className="text-gradient font-light">
-                & let&apos;s build
-              </span>{' '}
+              <span className="text-gradient font-light">& let&apos;s build</span>{' '}
               something great.
             </h1>
 
-            {/* Supporting Copy (Satoshi) */}
+            {/* Supporting copy */}
             <p className="font-satoshi font-light mt-4 sm:mt-5 max-w-lg text-base sm:text-lg leading-relaxed text-[#475569] dark:text-[#B8C2D1]">
-              Be part of a collaborative engineering team where innovation, curiosity, and rapid growth thrive.
-              Work on impactful digital products, solve challenging problems, and fast-track your career.
+              Be part of a collaborative engineering team where innovation, curiosity, and rapid
+              growth thrive. Work on impactful digital products, solve challenging problems, and
+              fast-track your career.
             </p>
 
-            {/* Compact Stats Row (Numbers: Space Grotesk, Labels: Outfit) */}
+            {/* Stats row */}
             <div className="mt-6 sm:mt-8 grid max-w-lg grid-cols-3 divide-x divide-slate-200 border-y border-slate-200 py-3.5 dark:divide-slate-800 dark:border-slate-800">
-              <div className="pr-3 sm:pr-4">
-                <p className="font-number font-space text-2xl sm:text-3xl font-bold tracking-tight text-[#0B1220] dark:text-[#F8FAFC]">
-                  20+
-                </p>
-                <p className="font-['Outfit'] mt-1 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#77859A]">
-                  Team Members
-                </p>
-              </div>
-
-              <div className="px-3 sm:px-4">
-                <p className="font-number font-space text-2xl sm:text-3xl font-bold tracking-tight text-[#0B1220] dark:text-[#F8FAFC]">
-                  50+
-                </p>
-                <p className="font-['Outfit'] mt-1 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#77859A]">
-                  Projects Done
-                </p>
-              </div>
-
-              <div className="pl-3 sm:pl-4">
-                <p className="font-number font-space text-2xl sm:text-3xl font-bold tracking-tight text-[#0B1220] dark:text-[#F8FAFC]">
-                  100%
-                </p>
-                <p className="font-['Outfit'] mt-1 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#64748B] dark:text-[#77859A]">
-                  Growth Mindset
-                </p>
-              </div>
+              {STATS.map(({ value, label }) => (
+                <div key={label} className="px-3 first:pl-0 first:pr-4 last:pr-0 last:pl-4">
+                  <p className="font-number font-space text-2xl sm:text-3xl font-bold tracking-tight text-[#0B1220] dark:text-[#F8FAFC]">
+                    {value}
+                  </p>
+                  <p className="font-['Outfit'] mt-1 text-[11px] sm:text-xs font-semibold text-[#64748B] dark:text-[#77859A]">
+                    {label}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* ================= RIGHT FORM CONTAINER ================= */}
           <div className="relative w-full max-w-[430px] mx-auto lg:ml-auto lg:mr-0">
-            {/* Ambient Card Glow */}
             <div className="pointer-events-none absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-br from-[#2563EB]/15 to-[#35B8A5]/15 blur-lg" />
 
-            {/* Form Card */}
             <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 sm:p-6 shadow-xl shadow-slate-900/5 backdrop-blur-md dark:border-slate-800 dark:bg-[#101A2B]/95 dark:shadow-black/40">
-              {/* Form Header */}
+              {/* Form header */}
               <div className="mb-4">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full bg-[#35B8A5] shadow-[0_0_8px_rgba(53,184,165,0.7)]" />
-                    <span className="font-satoshi text-[11px] font-semibold uppercase tracking-wider text-[#2563EB] dark:text-blue-400">
-                      We&apos;re Hiring
+                     <span className="font-satoshi text-[11px] font-semibold text-[#2563EB] dark:text-blue-400">
+                      We&apos;re hiring
                     </span>
                   </div>
                   <span className="font-satoshi text-[11px] font-medium text-[#64748B] dark:text-[#77859A]">
-                    Quick Apply
+                    Quick apply
                   </span>
                 </div>
 
-                {/* Form Title: General Sans */}
                 <h2 className="font-general font-light mt-1.5 text-xl sm:text-2xl tracking-[-0.025em] text-[#0B1220] dark:text-[#F8FAFC]">
-                  Let&apos;s Connect
+                  Let&apos;s connect
                 </h2>
                 <p className="font-satoshi font-light mt-1 text-xs sm:text-sm text-[#475569] dark:text-[#77859A]">
                   Tell us about your background and the role you are looking for.
                 </p>
               </div>
 
-              {/* Status Alert */}
               {status.message && (
                 <div
                   role="alert"
@@ -223,13 +201,10 @@ export default function CareerHero() {
               )}
 
               <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-3.5">
-                {/* Row 1: Name & Email */}
+                {/* Name & Email */}
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div>
-                    <label
-                      htmlFor="career-name"
-                      className="font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200"
-                    >
+                    <label htmlFor="career-name" className={labelClass}>
                       Name <span className="text-[#2563EB] dark:text-blue-400">*</span>
                     </label>
                     <input
@@ -240,15 +215,12 @@ export default function CareerHero() {
                       value={formData.name}
                       onChange={handleChange}
                       placeholder="Your name"
-                      className="font-satoshi w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs sm:text-sm text-[#0B1220] placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#2563EB] dark:border-slate-700/80 dark:bg-[#0A1220] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-[#3B82F6] dark:focus:ring-[#3B82F6] transition-colors"
+                      className={inputClass}
                     />
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="career-email"
-                      className="font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200"
-                    >
+                    <label htmlFor="career-email" className={labelClass}>
                       Email <span className="text-[#2563EB] dark:text-blue-400">*</span>
                     </label>
                     <input
@@ -259,18 +231,15 @@ export default function CareerHero() {
                       value={formData.email}
                       onChange={handleChange}
                       placeholder="you@example.com"
-                      className="font-satoshi w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs sm:text-sm text-[#0B1220] placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#2563EB] dark:border-slate-700/80 dark:bg-[#0A1220] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-[#3B82F6] dark:focus:ring-[#3B82F6] transition-colors"
+                      className={inputClass}
                     />
                   </div>
                 </div>
 
-                {/* Row 2: Contact & Location */}
+                {/* Contact & Location */}
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                   <div>
-                    <label
-                      htmlFor="career-contact"
-                      className="font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200"
-                    >
+                    <label htmlFor="career-contact" className={labelClass}>
                       Contact <span className="text-[#2563EB] dark:text-blue-400">*</span>
                     </label>
                     <input
@@ -281,15 +250,12 @@ export default function CareerHero() {
                       value={formData.contact}
                       onChange={handleChange}
                       placeholder="+91 98765 43210"
-                      className="font-satoshi w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs sm:text-sm text-[#0B1220] placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#2563EB] dark:border-slate-700/80 dark:bg-[#0A1220] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-[#3B82F6] dark:focus:ring-[#3B82F6] transition-colors"
+                      className={inputClass}
                     />
                   </div>
 
                   <div>
-                    <label
-                      htmlFor="career-location"
-                      className="font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200"
-                    >
+                    <label htmlFor="career-location" className={labelClass}>
                       Location
                     </label>
                     <input
@@ -299,18 +265,15 @@ export default function CareerHero() {
                       value={formData.location}
                       onChange={handleChange}
                       placeholder="City, State"
-                      className="font-satoshi w-full rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs sm:text-sm text-[#0B1220] placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#2563EB] dark:border-slate-700/80 dark:bg-[#0A1220] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-[#3B82F6] dark:focus:ring-[#3B82F6] transition-colors"
+                      className={inputClass}
                     />
                   </div>
                 </div>
 
-                {/* Row 3: Job Role Selection */}
+                {/* Job role */}
                 <div>
-                  <label
-                    htmlFor="career-role"
-                    className="font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200"
-                  >
-                    Desired Role
+                  <label htmlFor="career-role" className={labelClass}>
+                    Desired role
                   </label>
                   <div className="relative">
                     <select
@@ -318,9 +281,9 @@ export default function CareerHero() {
                       name="role"
                       value={formData.role}
                       onChange={handleChange}
-                      className="font-satoshi w-full appearance-none rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 pr-8 text-xs sm:text-sm text-[#0B1220] focus:border-[#2563EB] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#2563EB] dark:border-slate-700/80 dark:bg-[#0A1220] dark:text-white dark:focus:border-[#3B82F6] dark:focus:ring-[#3B82F6] transition-colors"
+                      className={`${inputClass} appearance-none pr-8`}
                     >
-                      <option value="">Select a Job Role</option>
+                      <option value="">Select a job role</option>
                       {JOB_ROLES.map((role) => (
                         <option key={role} value={role}>
                           {role}
@@ -331,13 +294,13 @@ export default function CareerHero() {
                   </div>
                 </div>
 
-                {/* Row 4: Resume File Upload */}
+                {/* Resume upload */}
                 <div>
-                  <label
-                    htmlFor="career-resume"
-                    className="font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200"
-                  >
-                    Resume / Portfolio <span className="text-[#64748B] dark:text-[#77859A] font-normal">(PDF, DOCX &lt;5MB)</span>
+                  <label htmlFor="career-resume" className={labelClass}>
+                    Resume / Portfolio{' '}
+                    <span className="text-[#64748B] dark:text-[#77859A] font-normal">
+                      (PDF, DOCX &lt;5MB)
+                    </span>
                   </label>
 
                   <label
@@ -386,12 +349,9 @@ export default function CareerHero() {
                   />
                 </div>
 
-                {/* Row 5: Message */}
+                {/* Message */}
                 <div>
-                  <label
-                    htmlFor="career-message"
-                    className="font-satoshi mb-1 block text-xs font-semibold text-[#0B1220] dark:text-slate-200"
-                  >
+                  <label htmlFor="career-message" className={labelClass}>
                     Message / Highlights
                   </label>
                   <textarea
@@ -401,15 +361,15 @@ export default function CareerHero() {
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Brief intro or link to your GitHub / LinkedIn / Portfolio..."
-                    className="font-satoshi w-full resize-none rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2 text-xs sm:text-sm text-[#0B1220] placeholder:text-slate-400 focus:border-[#2563EB] focus:bg-white focus:outline-none focus:ring-1 focus:ring-[#2563EB] dark:border-slate-700/80 dark:bg-[#0A1220] dark:text-white dark:placeholder:text-slate-500 dark:focus:border-[#3B82F6] dark:focus:ring-[#3B82F6] transition-colors"
+                    className={`${inputClass} resize-none`}
                   />
                 </div>
 
-                {/* Primary Submit Button */}
+                {/* Submit */}
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="font-satoshi group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2563EB] to-[#35B8A5] py-2.5 px-4 text-xs sm:text-sm font-semibold text-white shadow-md shadow-blue-500/20 transition-all duration-300 hover:from-[#1d4ed8] hover:to-[#2e9f8f] hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer disabled:opacity-70"
+                  className="font-satoshi group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#2563EB] to-[#35B8A5] py-2.5 px-4 text-xs sm:text-sm font-semibold text-white shadow-md shadow-blue-500/20 transition-all duration-300 hover:from-[#1d4ed8] hover:to-[#2e9f8f] hover:shadow-lg hover:shadow-blue-500/30 hover:-translate-y-0.5 active:translate-y-0 cursor-pointer disabled:opacity-70 disabled:hover:translate-y-0"
                 >
                   {isSubmitting ? (
                     <>
@@ -418,13 +378,13 @@ export default function CareerHero() {
                     </>
                   ) : (
                     <>
-                      <span>Submit Application</span>
+                      <span>Submit application</span>
                       <i className="fa-solid fa-arrow-right text-xs transition-transform duration-300 group-hover:translate-x-1" />
                     </>
                   )}
                 </button>
 
-                {/* WhatsApp Quick Link Option */}
+                {/* WhatsApp quick link */}
                 <div className="pt-1 text-center">
                   <button
                     type="button"

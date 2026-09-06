@@ -9,7 +9,6 @@ export default function AboutPage() {
   return (
     <div>
       <AboutHero />
-  
       <About />
       <Stats />
       <WhyChooseUs />

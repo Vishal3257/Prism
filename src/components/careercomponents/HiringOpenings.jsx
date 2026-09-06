@@ -1,35 +1,9 @@
 import { COMPANY } from '../../data/companyData'
 
 const OPENINGS = [
+ 
   {
     id: '01',
-    title: 'Frontend Developer',
-    type: 'Full-time',
-    seats: '02 Seats',
-    experience: '1–2 Years',
-    icon: 'fa-code',
-    department: 'Web Engineering',
-  },
-  {
-    id: '02',
-    title: 'Backend Developer',
-    type: 'Full-time',
-    seats: '01 Seat',
-    experience: '1–3 Years',
-    icon: 'fa-server',
-    department: 'Core Systems',
-  },
-  {
-    id: '03',
-    title: 'Full Stack Developer',
-    type: 'Full-time',
-    seats: '02 Seats',
-    experience: '2–4 Years',
-    icon: 'fa-layer-group',
-    department: 'Full Stack',
-  },
-  {
-    id: '04',
     title: 'UI/UX Designer',
     type: 'Full-time',
     seats: '01 Seat',
@@ -37,15 +11,15 @@ const OPENINGS = [
     icon: 'fa-pen-ruler',
     department: 'Product Design',
   },
-  {
-    id: '05',
-    title: 'DevOps Engineer',
-    type: 'Full-time',
-    seats: '01 Seat',
-    experience: '2–4 Years',
-    icon: 'fa-cloud',
-    department: 'Cloud & Infra',
-  },
+{
+  id: '02',
+  title: 'Digital Marketing Executive',
+  type: 'Full-time',
+  seats: '01 Seat',
+  experience: '1–3 Years',
+  icon: 'fa-bullhorn',
+  department: 'Digital Marketing',
+},
 ]
 
 export default function HiringOpenings() {

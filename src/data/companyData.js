@@ -5,7 +5,7 @@ export const COMPANY = {
   phone: '+91 8239239249',
   whatsappNumber: '+918239239249',
   address: 'Jagpura, Ramganj Mandi, Kota - Rajasthan - 326519',
-} 
+}
 
 export const SOCIAL_LINKS = {
   linkedin: 'https://www.linkedin.com/company/prism-infotech-solution/',
@@ -50,16 +50,9 @@ export const SERVICES = [
     turnaround: '1-3 Weeks',
     features: ['RAG Knowledge Base training', 'Multi-channel WhatsApp/Web chat', 'Lead qualification workflows', 'Multi-language support'],
   },
+ 
   {
     id: 5,
-    name: 'AI Calling Solutions',
-    icon: 'fa-phone-volume',
-    desc: 'Automated voice experiences that help your team engage customers efficiently.',
-    turnaround: '2-4 Weeks',
-    features: ['Natural human-like voice synthesis', 'Automated follow-up reminders', 'CRM integration & call transcripts', 'Low-latency conversational AI'],
-  },
-  {
-    id: 6,
     name: 'AI Automation',
     icon: 'fa-wand-magic-sparkles',
     desc: 'Smart automations that reduce repetitive work and improve productivity.',
@@ -67,7 +60,7 @@ export const SERVICES = [
     features: ['Zapier / Make / n8n workflows', 'Document & Invoice parsing', 'Cross-tool data sync', 'Error alerting & fallbacks'],
   },
   {
-    id: 7,
+    id: 6,
     name: 'Odoo ERP Solutions',
     icon: 'fa-cubes',
     image: '/service_icon_imgs/icons/odoo_img.png',
@@ -76,15 +69,16 @@ export const SERVICES = [
     features: ['Custom Odoo Module creation', 'Data migration from legacy systems', 'Manufacturing & POS integration', 'Dedicated developer training'],
   },
   {
-    id: 8,
+    id: 7,
     name: 'Blockchain Technology',
     icon: 'fa-link',
+    image: '/service_icon_imgs/icons/blockchain.svg',
     desc: 'Secure and scalable blockchain solutions for modern digital products.',
     turnaround: '3-6 Weeks',
     features: ['Smart contract development & audit', 'Web3 wallet connection (MetaMask, Phantom)', 'Decentralized storage (IPFS)', 'Tokenomics & DApp architecture'],
   },
   {
-    id: 9,
+    id: 8,
     name: 'Logo & Branding',
     icon: 'fa-paintbrush',
     image: '/service_icon_imgs/icons/branding.png',
@@ -93,7 +87,7 @@ export const SERVICES = [
     features: ['Vector Logo Design & marks', 'Color palettes & typography guidelines', 'Social media marketing kit', 'Complete Brand Style Guide'],
   },
   {
-    id: 10,
+    id: 9,
     name: 'Digital Marketing & SEO',
     icon: 'fa-bullhorn',
     image: '/service_icon_imgs/icons/digitalmic.png',
@@ -191,28 +185,40 @@ export const TESTIMONIALS = [
 export const PROJECTS = [
   {
     id: 1,
-    name: 'OdooFlow ERP',
-    category: 'Odoo',
-    tech: ['Odoo', 'Python', 'PostgreSQL'],
-    desc: 'A unified sales, inventory, and finance workspace for a multi-location distributor.',
-    image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=85',
-    client: 'Industrial Supplies Co.',
-    duration: '6 Weeks',
-    highlights: ['Multi-warehouse real-time sync', 'Custom automated tax invoice generation', 'Role-based access permissions'],
+    name: 'BrightSmile Dental',
+    category: 'Web',
+    tech: ['Next.js', 'UI/UX'],
+    desc: 'A trustworthy dental website designed to turn local searches into appointment inquiries.',
+    image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=85',
+    client: 'BrightSmile Clinic',
+    duration: '3 Weeks',
+    highlights: ['Automated online booking schedule', '100/100 Google Lighthouse score', 'HIPAA-compliant inquiry forms'],
   },
   {
     id: 2,
-    name: 'FieldOps 360',
-    category: 'Odoo',
-    tech: ['Odoo', 'Python', 'MySQL'],
-    desc: 'Operations automation that connects field teams, service tickets, and live reporting.',
-    image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=900&q=85',
-    client: 'FieldService Global',
-    duration: '5 Weeks',
-    highlights: ['GPS field dispatch routing', 'Automated customer dispatch SMS', 'Live manager KPI telemetry'],
+    name: 'SunGrid Energy',
+    category: 'Web',
+    tech: ['React', 'Node.js', 'SEO'],
+    desc: 'A high-converting solar website explaining clean-energy solutions with clear lead journeys.',
+    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=900&q=85',
+    client: 'SunGrid Renewables',
+    duration: '4 Weeks',
+    highlights: ['Interactive Solar Savings Calculator', 'Lead capture funnel with CRM sync', 'Comprehensive technical SEO rankings'],
   },
   {
     id: 3,
+    name: 'QuickBite',
+    category: 'App',
+    tech: ['React Native', 'Firebase'],
+    desc: 'A food delivery app built around fast discovery, live order updates, and easy checkout.',
+    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85',
+    client: 'QuickBite Logistics',
+    duration: '7 Weeks',
+    highlights: ['Live driver GPS tracking', 'Instant Stripe & UPI checkout', 'Push notification driver updates'],
+  },
+
+  {
+    id: 4,
     name: 'KroMeta',
     category: 'Blockchain',
     tech: ['Blockchain', 'React', 'Node.js'],
@@ -223,7 +229,7 @@ export const PROJECTS = [
     highlights: ['Audited Solidity smart contracts', 'Web3 wallet integration with gas optimization', 'High-throughput staking dashboard'],
   },
   {
-    id: 4,
+    id: 5,
     name: 'Mooning Monkey',
     category: 'Blockchain',
     tech: ['Web3', 'React', 'Node.js'],
@@ -235,18 +241,32 @@ export const PROJECTS = [
     highlights: ['Interactive minting portal', 'Community leaderboard integration', 'Dynamic metadata display'],
   },
   {
-    id: 5,
-    name: 'QuickBite',
-    category: 'App',
-    tech: ['React Native', 'Firebase'],
-    desc: 'A food delivery app built around fast discovery, live order updates, and easy checkout.',
-    image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=900&q=85',
-    client: 'QuickBite Logistics',
-    duration: '7 Weeks',
-    highlights: ['Live driver GPS tracking', 'Instant Stripe & UPI checkout', 'Push notification driver updates'],
+    id: 6,
+    name: 'OdooFlow ERP',
+    category: 'Odoo',
+    tech: ['Odoo', 'Python', 'PostgreSQL'],
+    desc: 'A unified sales, inventory, and finance workspace for a multi-location distributor.',
+    image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=900&q=85',
+    client: 'Industrial Supplies Co.',
+    duration: '6 Weeks',
+    highlights: ['Multi-warehouse real-time sync', 'Custom automated tax invoice generation', 'Role-based access permissions'],
   },
   {
-    id: 6,
+    id: 7,
+    name: 'FieldOps 360',
+    category: 'Odoo',
+    tech: ['Odoo', 'Python', 'MySQL'],
+    desc: 'Operations automation that connects field teams, service tickets, and live reporting.',
+    image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=900&q=85',
+    client: 'FieldService Global',
+    duration: '5 Weeks',
+    highlights: ['GPS field dispatch routing', 'Automated customer dispatch SMS', 'Live manager KPI telemetry'],
+  },
+
+
+
+  {
+    id: 8,
     name: 'Cartly',
     category: 'App',
     tech: ['Flutter', 'Supabase'],
@@ -256,28 +276,8 @@ export const PROJECTS = [
     duration: '6 Weeks',
     highlights: ['Instant wishlist sync across devices', 'Frictionless one-click checkout', 'Real-time stock level monitoring'],
   },
-  {
-    id: 7,
-    name: 'BrightSmile Dental',
-    category: 'Web',
-    tech: ['Next.js', 'UI/UX'],
-    desc: 'A trustworthy dental website designed to turn local searches into appointment inquiries.',
-    image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=900&q=85',
-    client: 'BrightSmile Clinic',
-    duration: '3 Weeks',
-    highlights: ['Automated online booking schedule', '100/100 Google Lighthouse score', 'HIPAA-compliant inquiry forms'],
-  },
-  {
-    id: 8,
-    name: 'SunGrid Energy',
-    category: 'Web',
-    tech: ['React', 'Node.js', 'SEO'],
-    desc: 'A high-converting solar website explaining clean-energy solutions with clear lead journeys.',
-    image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=900&q=85',
-    client: 'SunGrid Renewables',
-    duration: '4 Weeks',
-    highlights: ['Interactive Solar Savings Calculator', 'Lead capture funnel with CRM sync', 'Comprehensive technical SEO rankings'],
-  },
+
+
 ]
 
 export const INDUSTRIES = [
