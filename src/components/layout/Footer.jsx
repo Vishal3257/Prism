@@ -6,9 +6,9 @@ export default function Footer() {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Services', path: '/services' },
-    { label: 'Careers', path: '/careers' },
     { label: 'Portfolio', path: '/portfolio' },
     { label: 'Testimonials', path: '/testimonials' },
+    { label: 'Careers', path: '/careers' },
     { label: 'Contact', path: '/contact' },
   ]
 
@@ -31,14 +31,13 @@ export default function Footer() {
             <p className="text-xs text-slate-500 leading-relaxed max-w-sm mb-5">
               Transforming innovative concepts into scalable, revenue-generating digital products with AI and modern software engineering.
             </p>
-            
+
           </div>
 
           {/* Quick Links */}
           <div className="col-span-1 md:col-span-1 lg:col-span-2">
             <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0"></span>
-              Quick Links
+               Quick Links
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               {quickLinks.map((link) => (
@@ -58,14 +57,13 @@ export default function Footer() {
           {/* Services */}
           <div className="col-span-1 md:col-span-1 lg:col-span-3">
             <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0"></span>
-              Core Services
+               Core Services
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm">
               {SERVICES.slice(0, 7).map((service) => (
                 <li key={service.id}>
-                  <Link 
-                    to="/services" 
+                  <Link
+                    to="/services"
                     className="hover:text-blue-400 transition-colors inline-flex items-center gap-1.5 group"
                   >
                     <span className="w-1 h-1 rounded-full bg-slate-700 group-hover:bg-cyan-400 transition-colors"></span>
@@ -79,7 +77,6 @@ export default function Footer() {
           {/* Contact Details & Socials */}
           <div className="col-span-2 md:col-span-1 lg:col-span-3">
             <h4 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
               Direct Contact
             </h4>
 
