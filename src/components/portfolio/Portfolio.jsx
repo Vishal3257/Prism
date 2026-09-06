@@ -108,7 +108,7 @@ export default function Portfolio() {
         {/* Filter Controls: Tabs & Search */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
           {/* Category Tabs */}
-          <div className="flex flex-nowrap overflow-y-hidden overflow-x-hidden sm:flex-wrap justify-start gap-2 pb-2 sm:pb-0 w-full sm:w-auto" role="tablist" aria-label="Project categories">
+          <div className="flex flex-nowrap lg:overflow-y-hidden overflow-x-auto sm:flex-wrap justify-start gap-2 pb-2 sm:pb-0 w-full sm:w-auto" role="tablist" aria-label="Project categories">
             {projectTabs.map((tab) => {
               const count = getTabCount(tab)
               const isActive = activeTab === tab
