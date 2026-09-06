@@ -3,7 +3,7 @@ import emailjs from '@emailjs/browser'
 import { COMPANY, SERVICES } from '../../data/companyData'
 
 const EMAILJS_SERVICE_ID="service_y95hkk2"
-VITE_EMAILJS_TEMPLATE_ID="template_7m8oeto"
+const EMAILJS_TEMPLATE_ID="template_7m8oeto"
 const EMAILJS_PUBLIC_KEY="tGl_BQ3_4xRvXwJZA"
 
 export default function Contact() {
