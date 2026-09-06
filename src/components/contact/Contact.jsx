@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { COMPANY, SERVICES } from '../../data/companyData'
 
-const EMAILJS_SERVICE_ID="service_y95hkk2"
-const EMAILJS_TEMPLATE_ID="template_7m8oeto"
-const EMAILJS_PUBLIC_KEY="tGl_BQ3_4xRvXwJZA"
+// const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+// const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+// const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 export default function Contact() {
    
-  
+
   const [form, setForm] = useState({
     name: '',
     email: '',
