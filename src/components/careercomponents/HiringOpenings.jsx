@@ -1,6 +1,6 @@
+import { COMPANY } from '../../data/companyData'
 
 const OPENINGS = [
- 
   {
     id: '01',
     title: 'UI/UX Designer',
@@ -10,16 +10,16 @@ const OPENINGS = [
     icon: 'fa-pen-ruler',
     department: 'Product Design',
   },
-{
-  id: '02',
-  title: 'Digital Marketing Executive',
-  type: 'Full-time',
-  seats: '01 Seat',
-  experience: '1–3 Years',
-  icon: 'fa-bullhorn',
-  department: 'Digital Marketing',
-},
-{
+  {
+    id: '02',
+    title: 'Digital Marketing Executive',
+    type: 'Full-time',
+    seats: '01 Seat',
+    experience: '1–3 Years',
+    icon: 'fa-bullhorn',
+    department: 'Digital Marketing',
+  },
+  {
     id: '03',
     title: 'AI Integration Developer',
     type: 'Internship',
@@ -27,24 +27,43 @@ const OPENINGS = [
     experience: 'Fresher',
     icon: 'fa-brain',
     department: 'AI & GenAI',
-}
+  },
 ]
 
 export default function HiringOpenings() {
-  const handleApplyRole = (roleTitle) => {
-    window.dispatchEvent(
-      new CustomEvent('prism:select-job-role', {
-        detail: { role: roleTitle },
-      })
+  const cleanPhone = COMPANY.whatsappNumber
+    ? COMPANY.whatsappNumber.replace(/[^0-9]/g, '')
+    : '918239239249'
+
+  // Open WhatsApp with a pre-filled message for specific job role
+  const handleApplyRoleWhatsApp = (opening) => {
+    const message = [
+      `Hello Prism Infotech Team,`,
+      ``,
+      `I would like to apply for the *${opening.title}* position.`,
+      ``,
+      `📋 *Application Details:*`,
+      `• Role: ${opening.title}`,
+      `• Department: ${opening.department}`,
+      `• Experience: ${opening.experience}`,
+      `• Employment Type: ${opening.type}`,
+      ``,
+      `I would like to share my resume and discuss this opportunity. Please let me know the next steps.`,
+      ``,
+      `Thank you!`,
+    ].join('\n')
+
+    window.open(
+      `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer'
     )
-    const formEl = document.getElementById('career-apply-form')
-    if (formEl) {
-      formEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }
   }
 
+ 
+
   return (
-    <section className="relative isolate overflow-hidden bg-white dark:bg-[#060B14] py-3 sm:py-4 lg:py-4 transition-colors duration-300">
+    <section className="relative isolate overflow-hidden bg-white dark:bg-[#060B14] py-10 sm:py-14 lg:py-18 transition-colors duration-300">
       {/* Background Grid */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 opacity-40 dark:opacity-20
@@ -62,7 +81,8 @@ export default function HiringOpenings() {
           {/* Eyebrow Tag */}
           <div className="mb-4 inline-flex items-center gap-2">
             <span className="font-satoshi inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#2563EB] shadow-xs dark:border-blue-900/50 dark:bg-blue-950/40 dark:text-blue-300">
-               We&apos;re Hiring
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              We&apos;re Hiring
             </span>
           </div>
 
@@ -76,7 +96,7 @@ export default function HiringOpenings() {
 
           {/* Description (Satoshi) */}
           <p className="font-satoshi font-light mt-4 max-w-xl text-base sm:text-lg leading-relaxed text-[#475569] dark:text-[#B8C2D1]">
-            Explore our current open positions. Ready to apply? Simply fill out the quick application form in the section above.
+            Explore our current open positions. Ready to apply? Click on any role to connect directly with our recruitment team on WhatsApp.
           </p>
         </div>
 
@@ -141,14 +161,15 @@ export default function HiringOpenings() {
                   </span>
                 </div>
 
-                {/* Quick Apply Button */}
+                {/* Quick Apply Button -> WhatsApp */}
                 <div className="flex items-center justify-start lg:justify-end">
                   <button
                     type="button"
-                    onClick={() => handleApplyRole(opening.title)}
-                    className="font-satoshi group/btn inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-[#2563EB] shadow-2xs transition-all duration-300 hover:border-[#2563EB] hover:bg-[#2563EB] hover:text-white dark:border-slate-700 dark:bg-[#101A2B] dark:text-blue-400 dark:hover:bg-blue-600 dark:hover:text-white cursor-pointer"
+                    onClick={() => handleApplyRoleWhatsApp(opening)}
+                    className="font-satoshi group/btn inline-flex items-center gap-2 rounded-xl border border-emerald-500/40 bg-emerald-50/80 px-4 py-2 text-xs font-semibold text-emerald-700 shadow-2xs transition-all duration-300 hover:border-emerald-600 hover:bg-emerald-600 hover:text-white dark:border-emerald-500/30 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-600 dark:hover:text-white cursor-pointer"
                   >
-                    <span>Apply now</span>
+                    <i className="fa-brands fa-whatsapp text-sm text-emerald-600 group-hover/btn:text-white dark:text-emerald-400 dark:group-hover/btn:text-white transition-colors" />
+                    <span>Apply on WhatsApp</span>
                     <i className="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-0.5" />
                   </button>
                 </div>
@@ -160,13 +181,24 @@ export default function HiringOpenings() {
           ))}
         </div>
 
-        {/* Bottom Note */}
-        <div className="mt-8 flex flex-col gap-3 pt-6 text-sm text-[#64748B] dark:text-[#77859A] sm:flex-row sm:items-center sm:justify-between border-t border-slate-200/80 dark:border-slate-800/80">
-          <p className="font-satoshi">
-            Don&apos;t see the right role? We&apos;re always open to talented developers and creators.
-          </p>
-
-           
+        {/* Bottom Card for General Inquiries */}
+        <div className="mt-10 rounded-2xl border border-slate-200/80 bg-slate-50/60 p-6 sm:p-8 dark:border-slate-800/80 dark:bg-[#0A1220]/60 backdrop-blur-xs flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
+          <div>
+            <h4 className="font-general font-medium text-base sm:text-lg text-[#0B1220] dark:text-[#F8FAFC]">
+              Don&apos;t see the right role for your skills?
+            </h4>
+            <p className="font-satoshi font-light mt-1 text-xs sm:text-sm text-[#475569] dark:text-[#77859A]">
+              We&apos;re always looking for talented developers, designers &amp; problem-solvers. Reach out on WhatsApp or email your CV to{' '}
+              <a
+                href={`mailto:${COMPANY.email}`}
+                className="text-[#2563EB] dark:text-blue-400 font-medium hover:underline"
+              >
+                {COMPANY.email}
+              </a>
+              .
+            </p>
+          </div>
+ 
         </div>
       </div>
     </section>

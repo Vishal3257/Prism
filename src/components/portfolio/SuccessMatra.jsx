@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const PANELS = [
     {
@@ -38,8 +38,22 @@ const PANELS = [
     },
 ]
 
+// Tailwind's `lg` breakpoint (1024px). The hover/click "expand" interaction
+// only makes sense on desktop; below this width every panel is shown in its
+// fully expanded state permanently, with no interaction required.
+const DESKTOP_QUERY = '(min-width: 1024px)'
+
 export default function SuccessMantra() {
     const [activeIndex, setActiveIndex] = useState(null)
+    const [isDesktop, setIsDesktop] = useState(false)
+
+    useEffect(() => {
+        const mql = window.matchMedia(DESKTOP_QUERY)
+        setIsDesktop(mql.matches)
+        const handleChange = (e) => setIsDesktop(e.matches)
+        mql.addEventListener('change', handleChange)
+        return () => mql.removeEventListener('change', handleChange)
+    }, [])
 
     const handleKeyDown = (event, index) => {
         if (event.key === 'Enter' || event.key === ' ') {
@@ -73,32 +87,31 @@ export default function SuccessMantra() {
                     onMouseLeave={() => setActiveIndex(null)}
                 >
                     {PANELS.map((panel, index) => {
-                        const isActive = activeIndex === index
-                        const hasActivePanel = activeIndex !== null
+                        // On mobile there is no interaction at all: every panel is
+                        // permanently in its "expanded" look. On desktop, this
+                        // mirrors the original hover/click behaviour exactly.
+                        const isDesktopActive = isDesktop && activeIndex === index
+                        const showDetails = isDesktop ? isDesktopActive : true
+                        const hasActivePanel = isDesktop && activeIndex !== null
 
                         return (
                             <article
                                 key={panel.title}
-                                role="button"
-                                tabIndex={0}
-                                aria-label={`View ${panel.title} details`}
-                                aria-pressed={isActive}
-                                onMouseEnter={() => setActiveIndex(index)}
-                                onClick={() => setActiveIndex(index)}
-                                onKeyDown={(event) =>
-                                    handleKeyDown(event, index)
-                                }
+                                role={isDesktop ? 'button' : undefined}
+                                tabIndex={isDesktop ? 0 : -1}
+                                aria-label={isDesktop ? `View ${panel.title} details` : undefined}
+                                aria-pressed={isDesktop ? isDesktopActive : undefined}
+                                onMouseEnter={() => isDesktop && setActiveIndex(index)}
+                                onClick={() => isDesktop && setActiveIndex(index)}
+                                onKeyDown={(event) => isDesktop && handleKeyDown(event, index)}
                                 style={{
                                     flex: hasActivePanel
-                                        ? isActive
-                                            ? '4.5 1 0%'
-                                            : '0.7 1 0%'
+                                        ? isDesktopActive ? '4.5 1 0%' : '0.7 1 0%'
                                         : '1 1 0%',
                                 }}
                                 className={`
                                     relative
                                     min-w-0
-                                    cursor-pointer
                                     overflow-hidden
                                     rounded-2xl
                                     border border-slate-200/70
@@ -108,13 +121,11 @@ export default function SuccessMantra() {
                                     ease-[cubic-bezier(0.22,1,0.36,1)]
                                     dark:border-[#1D2A3D]
                                     dark:shadow-black/40
+                                    cursor-default
+                                    lg:cursor-pointer
 
-                                    ${hasActivePanel
-                                        ? isActive
-                                            ? 'min-h-[380px] lg:min-h-0 ring-2 ring-blue-500/50'
-                                            : 'min-h-[96px] lg:min-h-0'
-                                        : 'min-h-[96px] lg:min-h-0'
-                                    }
+                                    ${showDetails ? 'min-h-[380px] lg:min-h-0' : 'min-h-[96px] lg:min-h-0'}
+                                    ${isDesktopActive ? 'ring-2 ring-blue-500/50' : ''}
                                 `}
                             >
                                 {/* Background Image */}
@@ -124,7 +135,7 @@ export default function SuccessMantra() {
                                     loading="lazy"
                                     draggable={false}
                                     className={`absolute inset-0 h-full w-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-                                        isActive ? 'scale-105' : 'scale-100'
+                                        showDetails ? 'scale-105' : 'scale-100'
                                     }`}
                                 />
 
@@ -137,13 +148,11 @@ export default function SuccessMantra() {
                                         via-slate-950/40
                                         to-slate-950/20
                                         transition-opacity duration-500
-                                        ${isActive
-                                            ? 'opacity-0'
-                                            : 'opacity-100'
-                                        }
+                                        ${showDetails ? 'opacity-0' : 'opacity-100'}
                                     `}
                                 />
-                                {/* Vertical / Rotating Title */}
+                                {/* Vertical / Rotating Title (desktop) — always the full,
+                                    horizontal bar on mobile since there's nothing to collapse into */}
                                 <div
                                     className={`
                                         absolute
@@ -164,7 +173,7 @@ export default function SuccessMantra() {
                                         transition-all
                                         duration-700
                                         ease-[cubic-bezier(0.22,1,0.36,1)]
-                                        ${isActive
+                                        ${showDetails
                                             ? 'w-full rotate-0 translate-x-0'
                                             : 'w-36 -rotate-90 translate-x-14'
                                         }
@@ -185,7 +194,8 @@ export default function SuccessMantra() {
                                     </span>
                                 </div>
 
-                                {/* Active Content */}
+                                {/* Details panel — permanently visible on mobile, still
+                                    hover/click-gated on desktop */}
                                 <div
                                     className={`
                                         absolute
@@ -205,7 +215,7 @@ export default function SuccessMantra() {
                                         dark:bg-[#060B14]/85
                                         sm:p-8
                                         sm:pt-10
-                                        ${isActive
+                                        ${showDetails
                                             ? 'pointer-events-auto translate-y-0 opacity-100'
                                             : 'pointer-events-none translate-y-4 opacity-0'
                                         }

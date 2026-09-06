@@ -9,7 +9,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-[#F7F9FC] py-12 transition-colors duration-300 dark:bg-[#060B14] sm:py-16 lg:py-20"
+      className="relative overflow-hidden bg-[#F7F9FC] py-4 transition-colors duration-300 dark:bg-[#060B14] sm:py-4 lg:py-5"
     >
       {/* Ambient lighting glows */}
       <div className="pointer-events-none absolute -top-32 left-1/3 h-96 w-96 rounded-full bg-blue-500/8 blur-3xl dark:bg-blue-600/12" />

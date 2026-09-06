@@ -1,12 +1,11 @@
- 
-import CareerHero from '../components/careercomponents/CareerHero'
 import HiringOpenings from '../components/careercomponents/HiringOpenings'
+import CTA from '../components/common/CTA'
+
 export default function CareerPages() {
   return (
     <div>
-      <CareerHero />
       <HiringOpenings />
- 
+      <CTA />
     </div>
   )
 }

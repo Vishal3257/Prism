@@ -74,7 +74,7 @@ export default function Services() {
   }
 
   return (
-    <section id="services" data-cursor="services" className="py-14 sm:py-20 lg:py-24 bg-[#F7F9FC] dark:bg-[#060B14]">
+    <section id="services" data-cursor="services" className="py-3 sm:py-3 lg:py-4 bg-[#F7F9FC] dark:bg-[#060B14]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
           <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-blue-100/70 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 mb-3 border border-blue-200/60 dark:border-blue-800/40">
