@@ -3,7 +3,9 @@ import emailjs from '@emailjs/browser'
 import { COMPANY } from '../../data/companyData'
 
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_TEMPLATE_ID =
+  import.meta.env.VITE_EMAILJS_CAREER_TEMPLATE_ID ||
+  import.meta.env.VITE_EMAILJS_TEMPLATE_ID
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
 const JOB_ROLES = [
@@ -131,19 +133,19 @@ export default function CareerHero() {
       ? `${resumeFile.name} (${(resumeFile.size / 1024).toFixed(1)} KB)`
       : 'Not uploaded via form'
 
-    // Formatted candidate dossier ensuring complete info delivery
+    // Formatted candidate dossier ensuring complete info delivery without non-ASCII emojis
     const formattedApplicationDetails = [
       `===========================================`,
-      `💼 NEW JOB APPLICATION - PRISM INFOTECH`,
+      `NEW JOB APPLICATION - PRISM INFOTECH`,
       `===========================================`,
-      `👤 Candidate Name : ${formData.name.trim()}`,
-      `📧 Email Address  : ${formData.email.trim()}`,
-      `📱 Contact / Phone: ${formData.contact.trim()}`,
-      `📍 Location       : ${formData.location.trim() || 'Not specified'}`,
-      `🎯 Desired Role   : ${formData.role || 'General Application'}`,
-      `📄 Resume File    : ${resumeInfo}`,
+      `Candidate Name  : ${formData.name.trim()}`,
+      `Email Address   : ${formData.email.trim()}`,
+      `Contact / Phone : ${formData.contact.trim()}`,
+      `Location        : ${formData.location.trim() || 'Not specified'}`,
+      `Desired Role    : ${formData.role || 'General Application'}`,
+      `Resume File     : ${resumeInfo}`,
       ``,
-      `💬 Candidate Message / Portfolio Links:`,
+      `Candidate Message / Portfolio Links:`,
       `${formData.message.trim() || 'No additional note provided'}`,
       `===========================================`,
     ].join('\n')
@@ -183,12 +185,11 @@ export default function CareerHero() {
       // Complete candidate dossier
       message: formattedApplicationDetails,
       project_details: formattedApplicationDetails,
-      notes: formData.message.trim() || 'None',
+      notes: formData.message.trim() || 'No additional note provided',
 
       // Routing info
       to_email: COMPANY.email || 'contact.prisminfotech@gmail.com',
-      to_name: `${COMPANY.name} Recruitment Team`,
-      subject: `New Job Application: ${formData.role || 'General'} - ${formData.name.trim()}`,
+      to_name: COMPANY.name || 'Prism Infotech',
     }
 
     try {
@@ -209,10 +210,12 @@ export default function CareerHero() {
       if (fileInputRef.current) fileInputRef.current.value = ''
     } catch (err) {
       console.error('EmailJS Career application error:', err)
+      const errorMsg = err?.text || err?.message || ''
       setStatus({
         type: 'error',
-        message:
-          'Failed to send application. Please try again or apply directly via WhatsApp / email (contact.prisminfotech@gmail.com).',
+        message: errorMsg
+          ? `Failed to send application (${errorMsg}). Please try again or apply directly via WhatsApp / email (contact.prisminfotech@gmail.com).`
+          : 'Failed to send application. Please try again or apply directly via WhatsApp / email (contact.prisminfotech@gmail.com).',
       })
     } finally {
       setIsSubmitting(false)
@@ -439,19 +442,22 @@ export default function CareerHero() {
 
                   <label
                     htmlFor="career-resume"
-                    className={`flex cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed px-3 py-2 transition-all ${
+                    className={`flex w-full min-w-0 cursor-pointer items-center justify-between gap-3 rounded-lg border border-dashed px-3 py-2 transition-all ${
                       resumeFile
                         ? 'border-[#35B8A5] bg-[#35B8A5]/5 dark:border-teal-500/60 dark:bg-teal-950/20'
                         : 'border-slate-300 bg-slate-50/50 hover:border-[#2563EB] hover:bg-slate-50 dark:border-slate-700/80 dark:bg-[#0A1220]/60 dark:hover:border-blue-500'
                     }`}
                   >
-                    <div className="flex items-center gap-2 overflow-hidden">
+                    <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
                       <i
                         className={`fa-solid ${
                           resumeFile ? 'fa-file-pdf text-[#35B8A5]' : 'fa-paperclip text-[#2563EB] dark:text-blue-400'
                         } text-sm shrink-0`}
                       />
-                      <span className="font-satoshi truncate text-xs font-medium text-[#475569] dark:text-slate-300">
+                      <span
+                        title={resumeFile ? resumeFile.name : undefined}
+                        className="font-satoshi block min-w-0 flex-1 truncate text-xs font-medium text-[#475569] dark:text-slate-300"
+                      >
                         {resumeFile ? resumeFile.name : 'Upload your resume'}
                       </span>
                     </div>
@@ -461,7 +467,7 @@ export default function CareerHero() {
                         type="button"
                         onClick={handleRemoveFile}
                         aria-label="Remove resume file"
-                        className="text-xs text-rose-500 hover:text-rose-600 transition-colors p-1"
+                        className="shrink-0 text-xs text-rose-500 hover:text-rose-600 transition-colors p-1"
                       >
                         <i className="fa-solid fa-xmark" />
                       </button>

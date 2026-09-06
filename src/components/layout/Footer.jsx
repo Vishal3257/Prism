@@ -6,7 +6,7 @@ export default function Footer() {
     { label: 'Home', path: '/' },
     { label: 'About', path: '/about' },
     { label: 'Services', path: '/services' },
-    { label: 'Industries', path: '/industries' },
+    { label: 'Careers', path: '/careers' },
     { label: 'Portfolio', path: '/portfolio' },
     { label: 'Testimonials', path: '/testimonials' },
     { label: 'Contact', path: '/contact' },

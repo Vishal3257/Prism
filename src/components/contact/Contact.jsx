@@ -85,7 +85,13 @@ export default function Contact() {
   const handleSubmitEmail = async (e) => {
     e.preventDefault()
     setTouched({ name: true, email: true, service: true, phone: true })
-    if (!validateAll()) return
+    if (!validateAll()) {
+      setStatus({
+        type: 'error',
+        message: 'Please fill in all required fields marked with * before submitting.',
+      })
+      return
+    }
 
     if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
       console.error('EmailJS configuration error: Missing environment variables.')
@@ -154,9 +160,12 @@ export default function Contact() {
       setErrors({})
     } catch (err) {
       console.error('EmailJS submit error:', err)
+      const errorMsg = err?.text || err?.message || ''
       setStatus({
         type: 'error',
-        message: 'Unable to send message via EmailJS right now. Please check your connection or contact us directly on WhatsApp.',
+        message: errorMsg
+          ? `Unable to send message via EmailJS (${errorMsg}). Please check your connection or contact us directly on WhatsApp.`
+          : 'Unable to send message via EmailJS right now. Please check your connection or contact us directly on WhatsApp.',
       })
     } finally {
       setIsSubmitting(false)
