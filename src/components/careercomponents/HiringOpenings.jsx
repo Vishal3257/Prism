@@ -19,7 +19,7 @@ const OPENINGS = [
     icon: 'fa-bullhorn',
     department: 'Digital Marketing',
   },
-{
+  {
     id: '03',
     title: 'Business Development Associate',
     type: 'Full-time',
@@ -27,7 +27,7 @@ const OPENINGS = [
     experience: '0–2 Years',
     icon: 'fa-handshake',
     department: 'Business Development',
-},
+  },
 ]
 
 export default function HiringOpenings() {
@@ -60,10 +60,10 @@ export default function HiringOpenings() {
     )
   }
 
- 
+
 
   return (
-    <section className="relative isolate overflow-hidden bg-white dark:bg-[#060B14] py-10 sm:py-14 lg:py-18 transition-colors duration-300">
+    <section className="relative isolate overflow-hidden bg-white dark:bg-[#060B14] py-3 sm:py-4 lg:py-4 transition-colors duration-300">
       {/* Background Grid */}
       <div
         className="pointer-events-none absolute inset-0 -z-10 opacity-40 dark:opacity-20
@@ -81,8 +81,7 @@ export default function HiringOpenings() {
           {/* Eyebrow Tag */}
           <div className="mb-4 inline-flex items-center gap-2">
             <span className="font-satoshi inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-[#2563EB] shadow-xs dark:border-blue-900/50 dark:bg-blue-950/40 dark:text-blue-300">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              We&apos;re Hiring
+               We&apos;re Hiring
             </span>
           </div>
 
@@ -107,14 +106,14 @@ export default function HiringOpenings() {
               key={opening.id}
               className="group relative border-b border-slate-200/80 dark:border-slate-800/80 py-5 transition-all duration-300 hover:bg-slate-50/70 dark:hover:bg-white/[0.02] lg:px-4"
             >
-              <div className="grid items-center gap-4 sm:gap-5 lg:grid-cols-[40px_1.4fr_130px_120px_120px_auto] lg:gap-5">
+              <div className="grid items-center gap-4 sm:gap-5 lg:grid-cols-[40px_1.4fr_130px_120px_120px_auto] lg:gap-6">
                 {/* Index (Space Grotesk) */}
                 <div className="hidden font-number font-space text-sm font-semibold text-slate-400 dark:text-slate-600 lg:block">
                   {opening.id}
                 </div>
 
                 {/* Role Title & Icon */}
-                <div className="flex items-center gap-3.5 sm:gap-4">
+                <div className="flex items-center gap-3 sm:gap-4">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-slate-200/80 bg-slate-100/70 text-[#2563EB] transition-all duration-300 group-hover:border-[#2563EB]/40 group-hover:bg-[#2563EB]/10 dark:border-slate-800 dark:bg-[#101A2B] dark:text-[#35B8A5] dark:group-hover:border-blue-500/40 dark:group-hover:bg-blue-600/15">
                     <i className={`fa-solid ${opening.icon} text-sm`} />
                   </div>
@@ -153,7 +152,7 @@ export default function HiringOpenings() {
                 </div>
 
                 {/* Experience Required */}
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-[#475569] dark:text-[#B8C2D1]">
+                <div className="flex items-center gap-1 text-xs sm:text-sm text-[#475569] dark:text-[#B8C2D1]">
                   <i className="fa-solid fa-briefcase text-xs text-[#2563EB] dark:text-blue-400" />
                   <span className="font-satoshi">Exp:</span>
                   <span className="font-number font-space font-semibold text-[#0B1220] dark:text-[#F8FAFC]">
@@ -198,7 +197,7 @@ export default function HiringOpenings() {
               .
             </p>
           </div>
- 
+
         </div>
       </div>
     </section>
