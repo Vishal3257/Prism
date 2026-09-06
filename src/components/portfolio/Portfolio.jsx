@@ -6,7 +6,7 @@ export default function Portfolio() {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedProject, setSelectedProject] = useState(null)
 
-  const projectTabs = ['All', 'Odoo', 'Blockchain', 'App', 'Web']
+  const projectTabs = ['All','Web','App','Blockchain','Odoo' ]
 
   const techIcons = {
     Odoo: 'fa-cubes',
