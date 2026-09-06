@@ -7,6 +7,7 @@ const EMAILJS_TEMPLATE_ID="template_7m8oeto"
 const EMAILJS_PUBLIC_KEY="tGl_BQ3_4xRvXwJZA"
 
 export default function Contact() {
+  
   const [form, setForm] = useState({
     name: '',
     email: '',
