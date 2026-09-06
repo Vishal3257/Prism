@@ -1,6 +1,5 @@
 import Hero from '../components/landing/Hero'
 import Stats from '../components/common/Stats'
-import About from '../components/aboutcomponents/About'
 import Services from '../components/services/Services'
 import Technologies from '../components/services/Technologies'
 import WhyChooseUs from '../components/common/WhyChooseUs'
@@ -15,7 +14,6 @@ export default function Home() {
     <>
       <Hero />
       <Stats />
-      <About />
       <Services />
       <Technologies />
       <WhyChooseUs />
