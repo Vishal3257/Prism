@@ -5,7 +5,7 @@ import { COMPANY } from '../../data/companyData'
 const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_CAREER_TEMPLATE_ID
 const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
- 
+
 const JOB_ROLES = [
   'UI/UX Designer',
   'Digital Marketing Executive',
@@ -32,6 +32,28 @@ const STATS = [
   { value: '50+', label: 'Projects done' },
   { value: '100%', label: 'Growth mindset' },
 ]
+
+// Max raw file size allowed for upload. Kept below 5MB because base64
+// encoding inflates the payload by ~33% before it reaches EmailJS/SMTP.
+const MAX_RESUME_SIZE_BYTES = 3 * 1024 * 1024 // 3MB
+
+// Converts a File object to a base64 string (without the "data:...;base64," prefix).
+// EmailJS's send() only transports text/string template params - a raw File object
+// is silently dropped. To actually deliver the file as an email attachment, it must
+// be base64-encoded and mapped to a "Variable Attachment" configured in the EmailJS
+// template dashboard (Template -> Attachments tab -> Variable Attachment ->
+// parameter name "resume_attachment", filename "{{resume_filename}}").
+const fileToBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = reader.result || ''
+      const base64 = typeof result === 'string' ? result.split(',')[1] : ''
+      resolve(base64)
+    }
+    reader.onerror = () => reject(new Error('Failed to read resume file.'))
+    reader.readAsDataURL(file)
+  })
 
 export default function CareerHero() {
   const [formData, setFormData] = useState({
@@ -72,8 +94,11 @@ export default function CareerHero() {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0]
     if (!file) return
-    if (file.size > 5 * 1024 * 1024) {
-      setStatus({ type: 'error', message: 'Resume file size should be less than 5MB.' })
+    if (file.size > MAX_RESUME_SIZE_BYTES) {
+      setStatus({
+        type: 'error',
+        message: `Resume file size should be less than ${MAX_RESUME_SIZE_BYTES / (1024 * 1024)}MB.`,
+      })
       return
     }
     setResumeFile(file)
@@ -131,6 +156,22 @@ export default function CareerHero() {
       ? `${resumeFile.name} (${(resumeFile.size / 1024).toFixed(1)} KB)`
       : 'Not uploaded via form'
 
+    // Actually encode the resume so it can travel as an email attachment.
+    let resumeBase64 = ''
+    if (resumeFile) {
+      try {
+        resumeBase64 = await fileToBase64(resumeFile)
+      } catch (err) {
+        console.error('Resume file read error:', err)
+        setIsSubmitting(false)
+        setStatus({
+          type: 'error',
+          message: 'Could not read the resume file. Please re-select it and try again.',
+        })
+        return
+      }
+    }
+
     // Formatted candidate dossier ensuring complete info delivery without non-ASCII emojis
     const formattedApplicationDetails = [
       `===========================================`,
@@ -176,9 +217,15 @@ export default function CareerHero() {
       company: 'Job Applicant',
       company_name: 'Job Applicant',
 
-      // Resume info
+      // Resume info (text summary shown in the email body)
       resume: resumeInfo,
       resume_name: resumeInfo,
+
+      // Actual resume attachment (requires a "Variable Attachment" configured in the
+      // EmailJS template dashboard: Attachments tab -> parameter name
+      // "resume_attachment", filename "{{resume_filename}}")
+      resume_attachment: resumeBase64,
+      resume_filename: resumeFile ? resumeFile.name : '',
 
       // Complete candidate dossier
       message: formattedApplicationDetails,
@@ -434,7 +481,7 @@ export default function CareerHero() {
                   <label htmlFor="career-resume" className={labelClass}>
                     Resume / Portfolio{' '}
                     <span className="text-[#64748B] dark:text-[#77859A] font-normal">
-                      (PDF, DOCX &lt;5MB)
+                      (PDF, DOCX &lt;3MB)
                     </span>
                   </label>
 

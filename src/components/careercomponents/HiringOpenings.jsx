@@ -19,6 +19,15 @@ const OPENINGS = [
   icon: 'fa-bullhorn',
   department: 'Digital Marketing',
 },
+{
+    id: '03',
+    title: 'AI Integration Developer',
+    type: 'Internship',
+    seats: '01 Seat',
+    experience: 'Fresher',
+    icon: 'fa-brain',
+    department: 'AI & GenAI',
+}
 ]
 
 export default function HiringOpenings() {
