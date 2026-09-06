@@ -664,3 +664,124 @@ h6 {
 .animate-card-enter {
   animation: card-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
+
+/* Mobile Touch & Tap Optimization */
+@media (hover: none) and (pointer: coarse) {
+  article, button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* ==========================================================================
+   Card Sliding Gradient Background Animation (Hover & Active / Touch)
+   Animates bottom-to-top on activate, and top-to-bottom in reverse on unactive
+   ========================================================================== */
+.card-gradient-interactive {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+              border-color 0.45s ease;
+}
+
+.card-sliding-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: linear-gradient(to top, #1457E8, #1268DF, #19B3AC);
+  border-radius: 1rem;
+  pointer-events: none;
+  transform: translateY(100%);
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
+}
+
+/* Active State (Triggered on click/tap - bottom to top animation) */
+.card-gradient-interactive.is-card-active .card-sliding-bg {
+  transform: translateY(0);
+}
+
+.card-gradient-interactive.is-card-active {
+  transform: translateY(-4px);
+  border-color: #3B82F6 !important;
+  box-shadow: 0 20px 40px -10px rgba(20, 87, 232, 0.35) !important;
+}
+
+.card-gradient-interactive.is-card-active .card-text-white {
+  color: #FFFFFF !important;
+}
+
+.card-gradient-interactive.is-card-active .card-text-muted {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.card-gradient-interactive.is-card-active .card-text-subtle {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.card-gradient-interactive.is-card-active .card-badge-active {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #FFFFFF !important;
+}
+
+.card-gradient-interactive.is-card-active .card-icon-active {
+  transform: scale(1.1);
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #FFFFFF !important;
+}
+
+.card-gradient-interactive.is-card-active .card-border-active {
+  border-color: rgba(255, 255, 255, 0.25) !important;
+}
+
+.card-gradient-interactive.is-card-active .card-arrow-active {
+  transform: translateX(4px);
+}
+
+/* Desktop Hover Effects (Only on Pointer Devices) */
+@media (hover: hover) and (pointer: fine) {
+  .card-gradient-interactive:hover .card-sliding-bg {
+    transform: translateY(0);
+  }
+
+  .card-gradient-interactive:hover {
+    transform: translateY(-6px);
+    border-color: #3B82F6 !important;
+    box-shadow: 0 20px 40px -10px rgba(20, 87, 232, 0.28) !important;
+  }
+
+  .card-gradient-interactive:hover .card-text-white {
+    color: #FFFFFF !important;
+  }
+
+  .card-gradient-interactive:hover .card-text-muted {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+
+  .card-gradient-interactive:hover .card-text-subtle {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .card-gradient-interactive:hover .card-badge-active {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.35) !important;
+    color: #FFFFFF !important;
+  }
+
+  .card-gradient-interactive:hover .card-icon-active {
+    transform: scale(1.1);
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #FFFFFF !important;
+  }
+
+  .card-gradient-interactive:hover .card-border-active {
+    border-color: rgba(255, 255, 255, 0.25) !important;
+  }
+
+  .card-gradient-interactive:hover .card-arrow-active {
+    transform: translateX(4px);
+  }
+}

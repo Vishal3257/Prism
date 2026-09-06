@@ -5,6 +5,7 @@ export default function Portfolio() {
   const [activeTab, setActiveTab] = useState('All')
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedProject, setSelectedProject] = useState(null)
+  const [activeProjectId, setActiveProjectId] = useState(null)
 
   const projectTabs = ['All','Web','App','Blockchain','Odoo' ]
 
@@ -42,6 +43,42 @@ export default function Portfolio() {
       document.body.style.overflow = 'unset'
     }
   }, [selectedProject])
+
+  // Click outside to deactivate active project card and trigger smooth reverse slide-down
+  useEffect(() => {
+    if (!activeProjectId) return
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('#portfolio')) {
+        setActiveProjectId(null)
+      }
+    }
+    document.addEventListener('pointerdown', handleOutsideClick)
+    return () => document.removeEventListener('pointerdown', handleOutsideClick)
+  }, [activeProjectId])
+
+  const handleProjectCardClick = (project) => {
+    const isTouchOrMobile =
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 1024)
+
+    if (!isTouchOrMobile) {
+      // Desktop mouse: open modal directly on click
+      setSelectedProject(project)
+      return
+    }
+
+    // Touch / Mobile: toggle active state (bottom to top on active, reverse slide down on unactive)
+    if (activeProjectId === project.id) {
+      setActiveProjectId(null)
+    } else {
+      setActiveProjectId(project.id)
+    }
+  }
+
+  const handleOpenProjectModal = (project, e) => {
+    e.stopPropagation()
+    setSelectedProject(project)
+  }
 
   const filteredProjects = PROJECTS.filter((p) => {
     const matchesCategory = activeTab === 'All' || p.category === activeTab
@@ -198,20 +235,20 @@ export default function Portfolio() {
               <article
                 key={project.id}
                 style={{ animationDelay: `${Math.min(idx * 45, 360)}ms` }}
-                className="animate-card-enter group relative overflow-hidden rounded-2xl bg-white dark:bg-[#101A2B] border border-slate-200/80 dark:border-[#1D2A3D] hover:border-blue-500 dark:hover:border-[#42C7B5] shadow-xs hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between"
+                onClick={() => handleProjectCardClick(project)}
+                className={`card-gradient-interactive animate-card-enter group rounded-2xl bg-white dark:bg-[#101A2B] border border-slate-200/80 dark:border-[#1D2A3D] shadow-xs flex flex-col justify-between cursor-pointer select-none ${
+                  activeProjectId === project.id ? 'is-card-active' : ''
+                }`}
               >
-                {/* Bottom-to-Top Sliding Fill Background Animation */}
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 z-0 bg-gradient-to-t from-[#1457E8] via-[#1268DF] to-[#19B3AC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out pointer-events-none rounded-2xl"
-                />
+                {/* Bottom-to-Top Sliding Fill Background Animation (and reverse on unactive) */}
+                <div aria-hidden="true" className="card-sliding-bg" />
 
                 {/* Card Content Layer */}
                 <div className="relative z-10 flex flex-col justify-between h-full">
                   <div>
                     <div
                       className="relative h-48 overflow-hidden cursor-pointer"
-                      onClick={() => setSelectedProject(project)}
+                      onClick={(e) => handleOpenProjectModal(project, e)}
                     >
                       <img
                         src={project.image}
@@ -219,7 +256,9 @@ export default function Portfolio() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3.5">
+                      <div
+                        className="absolute inset-0 bg-gradient-to-t from-slate-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3.5"
+                      >
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-900 shadow-md backdrop-blur-xs">
                           <i className="fa-solid fa-expand text-[10px]" />
                           Quick View
@@ -238,13 +277,15 @@ export default function Portfolio() {
                     <div className="p-5">
                       <div className="flex items-center justify-between mb-2">
                         <h3
-                          className="font-general font-medium tracking-[-0.025em] text-lg text-slate-900 dark:text-[#F8FAFC] group-hover:text-white transition-colors duration-300 cursor-pointer"
-                          onClick={() => setSelectedProject(project)}
+                          className="card-text-white font-general font-medium tracking-[-0.025em] text-lg text-slate-900 dark:text-[#F8FAFC] transition-colors duration-300 cursor-pointer"
+                          onClick={(e) => handleOpenProjectModal(project, e)}
                         >
                           {project.name}
                         </h3>
                         {project.client && (
-                          <span className="text-[10px] font-medium text-slate-400 dark:text-[#77859A] group-hover:text-white/80 transition-colors duration-300 truncate max-w-[110px]">
+                          <span
+                            className="card-text-subtle text-[10px] font-medium text-slate-400 dark:text-[#77859A] transition-colors duration-300 truncate max-w-[110px]"
+                          >
                             {project.client}
                           </span>
                         )}
@@ -254,7 +295,7 @@ export default function Portfolio() {
                         {project.tech.map((tech) => (
                           <span
                             key={tech}
-                            className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 dark:bg-slate-900/90 text-blue-700 dark:text-[#3B82F6] border border-blue-200/50 dark:border-[#1D2A3D] group-hover:bg-white/20 group-hover:border-white/30 group-hover:text-white transition-all duration-300"
+                            className="card-badge-active inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 dark:bg-slate-900/90 text-blue-700 dark:text-[#3B82F6] border border-blue-200/50 dark:border-[#1D2A3D] transition-all duration-300"
                           >
                             <i className={`fa-solid ${techIcons[tech] || 'fa-code'} text-[10px]`} />
                             {tech}
@@ -262,20 +303,26 @@ export default function Portfolio() {
                         ))}
                       </div>
 
-                      <p className="text-sm text-slate-600 dark:text-[#B8C2D1] group-hover:text-white/90 transition-colors duration-300 leading-relaxed line-clamp-3">
+                      <p
+                        className="card-text-muted text-sm text-slate-600 dark:text-[#B8C2D1] transition-colors duration-300 leading-relaxed line-clamp-3"
+                      >
                         {project.desc}
                       </p>
                     </div>
                   </div>
 
-                  <div className="px-5 pb-5 pt-0 flex items-center justify-between border-t border-slate-100 dark:border-[#1D2A3D] group-hover:border-white/25 mt-2 pt-3 transition-colors duration-300">
+                  <div
+                    className="card-border-active px-5 pb-5 pt-0 flex items-center justify-between border-t border-slate-100 dark:border-[#1D2A3D] mt-2 pt-3 transition-colors duration-300"
+                  >
                     <button
                       type="button"
-                      onClick={() => setSelectedProject(project)}
-                      className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-[#3B82F6] group-hover:text-white transition-colors duration-300 cursor-pointer"
+                      onClick={(e) => handleOpenProjectModal(project, e)}
+                      className="card-text-white inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-[#3B82F6] transition-colors duration-300 cursor-pointer"
                     >
                       <span>View Case</span>
-                      <i className="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform" />
+                      <i
+                        className="card-arrow-active fa-solid fa-arrow-right text-[10px] transition-transform"
+                      />
                     </button>
 
                     {project.url && (
@@ -283,11 +330,14 @@ export default function Portfolio() {
                         href={project.url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-blue-600 dark:text-[#77859A] dark:hover:text-white group-hover:text-white transition-colors duration-300 cursor-pointer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="card-text-white inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-blue-600 dark:text-[#77859A] dark:hover:text-white transition-colors duration-300 cursor-pointer"
                         aria-label={`Open live site for ${project.name}`}
                       >
                         <span>Live Demo</span>
-                        <i className="fa-solid fa-arrow-up-right-from-square text-[9px] group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
+                        <i
+                          className="card-arrow-active fa-solid fa-arrow-up-right-from-square text-[9px] transition-transform"
+                        />
                       </a>
                     )}
                   </div>

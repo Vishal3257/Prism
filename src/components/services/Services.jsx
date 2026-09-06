@@ -3,6 +3,7 @@ import { SERVICES } from '../../data/companyData'
 
 export default function Services() {
   const [selectedService, setSelectedService] = useState(null)
+  const [activeServiceId, setActiveServiceId] = useState(null)
 
   // ESC key listener to close modal
   useEffect(() => {
@@ -21,31 +22,66 @@ export default function Services() {
     }
   }, [selectedService])
 
+  // Click outside to deactivate active card and trigger smooth reverse slide-down
+  useEffect(() => {
+    if (!activeServiceId) return
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('#services')) {
+        setActiveServiceId(null)
+      }
+    }
+    document.addEventListener('pointerdown', handleOutsideClick)
+    return () => document.removeEventListener('pointerdown', handleOutsideClick)
+  }, [activeServiceId])
+
+  const handleCardClick = (service) => {
+    const isTouchOrMobile =
+      typeof window !== 'undefined' &&
+      ('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 1024)
+
+    if (!isTouchOrMobile) {
+      // Desktop mouse: open modal directly on click
+      setSelectedService(service)
+      return
+    }
+
+    // Touch / Mobile: toggle active state (bottom to top on active, reverse slide down on unactive)
+    if (activeServiceId === service.id) {
+      setActiveServiceId(null)
+    } else {
+      setActiveServiceId(service.id)
+    }
+  }
+
+  const handleExploreClick = (service, e) => {
+    e.stopPropagation()
+    setSelectedService(service)
+    setActiveServiceId(null)
+  }
+
   const handleBookService = (service) => {
     window.dispatchEvent(
       new CustomEvent('prism:select-inquiry', {
         detail: {
           service: service.name,
-          message: `Hello Prism team, I would like to get a quote and discuss the scope for your ${service.name} service.`,
+          message: `Inquiring about ${service.name}. Features required: ${service.features.join(', ')}`,
         },
       })
     )
     setSelectedService(null)
-    const contactEl = document.getElementById('contact')
-    if (contactEl) {
-      contactEl.scrollIntoView({ behavior: 'smooth' })
-    }
+    const el = document.getElementById('contact')
+    if (el) el.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
-    <section id="services" className="py-2 sm:py-5 lg:py-5 bg-gradient-subtle border-y border-slate-200/60 dark:border-slate-800/60">
+    <section id="services" data-cursor="services" className="py-14 sm:py-20 lg:py-24 bg-[#F7F9FC] dark:bg-[#060B14]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
-          <span className="text-xs sm:text-sm font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
-            What We Do
+        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+          <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-wider uppercase bg-blue-100/70 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 mb-3 border border-blue-200/60 dark:border-blue-800/40">
+            What We Deliver
           </span>
-          <h2 className="font-general font-light text-3xl sm:text-4xl lg:text-5xl text-slate-900 dark:text-white mt-2 tracking-[-0.025em]">
-            Our <span className="text-gradient">Digital Services</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium font-general text-slate-900 dark:text-[#F8FAFC] tracking-[-0.025em]">
+            Engineering & <span className="text-gradient">Digital Services</span>
           </h2>
           <p className="mt-4 text-slate-600 dark:text-slate-400">
             End-to-end development, automation, and digital intelligence crafted to transform and accelerate modern business.
@@ -56,51 +92,59 @@ export default function Services() {
           {SERVICES.map((service) => (
             <article
               key={service.id}
-              onClick={() => setSelectedService(service)}
+              onClick={() => handleCardClick(service)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   e.preventDefault()
-                  setSelectedService(service)
+                  handleCardClick(service)
                 }
               }}
               tabIndex={0}
               role="button"
               aria-label={`View details for ${service.name}`}
-              className="group relative overflow-hidden p-5 rounded-2xl bg-white dark:bg-[#101A2B] border border-slate-200/80 dark:border-[#1D2A3D] hover:border-blue-500 dark:hover:border-[#42C7B5] shadow-xs hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-2 transition-all duration-500 flex flex-col justify-between cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className={`card-gradient-interactive group p-5 rounded-2xl bg-white dark:bg-[#101A2B] border border-slate-200/80 dark:border-[#1D2A3D] shadow-xs flex flex-col justify-between cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 select-none ${
+                activeServiceId === service.id ? 'is-card-active' : ''
+              }`}
             >
-              {/* Bottom-to-Top Sliding Fill Background Animation */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 z-0 bg-gradient-to-t from-[#1457E8] via-[#1268DF] to-[#19B3AC] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out pointer-events-none rounded-2xl"
-              />
+              {/* Bottom-to-Top Sliding Fill Background Animation (and reverse top-to-bottom on unactive) */}
+              <div aria-hidden="true" className="card-sliding-bg" />
 
               {/* Card Content (z-10 to stay above the sliding background) */}
               <div className="relative z-10 flex flex-col justify-between h-full">
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 dark:bg-slate-900/90 border border-blue-200/60 dark:border-[#1D2A3D] flex items-center justify-center text-blue-600 dark:text-[#3B82F6] text-xl mb-5 group-hover:scale-110 group-hover:bg-white/20 group-hover:border-white/40 group-hover:text-white transition-all duration-300 p-2 shadow-xs">
+                  <div
+                    className="card-icon-active w-12 h-12 rounded-xl bg-blue-50 dark:bg-slate-900/90 border border-blue-200/60 dark:border-[#1D2A3D] flex items-center justify-center text-blue-600 dark:text-[#3B82F6] text-xl mb-5 transition-all duration-300 p-2 shadow-xs"
+                  >
                     {service.image ? (
                       <img
                         src={service.image}
                         alt={service.name}
-                        className="w-16 h-16 object-contain transition-transform duration-300 group-hover:scale-110"
+                        className="w-16 h-16 object-contain transition-transform duration-300"
                       />
                     ) : (
                       <i className={`fa-solid ${service.icon}`} />
                     )}
                   </div>
+
                   <div className="flex items-center justify-between gap-2 mb-2">
-                    <h3 className="text-lg font-medium font-general tracking-[-0.025em] text-slate-900 dark:text-[#F8FAFC] group-hover:text-white transition-colors duration-300">
+                    <h3 className="card-text-white text-lg font-medium font-general tracking-[-0.025em] text-slate-900 dark:text-[#F8FAFC] transition-colors duration-300">
                       {service.name}
                     </h3>
                   </div>
-                  <p className="text-sm text-slate-600 dark:text-[#B8C2D1] group-hover:text-white/90 transition-colors duration-300 leading-relaxed">
+
+                  <p className="card-text-muted text-sm text-slate-600 dark:text-[#B8C2D1] transition-colors duration-300 leading-relaxed">
                     {service.desc}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3.5 border-t border-slate-100 dark:border-[#1D2A3D] group-hover:border-white/25 flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-[#3B82F6] group-hover:text-white transition-all duration-300">
-                  <span className="group-hover:underline">Explore Details</span>
-                  <i className="fa-solid fa-arrow-right text-[11px] group-hover:translate-x-1.5 transition-transform duration-300" />
+                <div
+                  onClick={(e) => handleExploreClick(service, e)}
+                  className="card-border-active mt-4 pt-3.5 border-t border-slate-100 dark:border-[#1D2A3D] flex items-center justify-between text-xs font-semibold text-blue-600 dark:text-[#3B82F6] transition-all duration-300 cursor-pointer"
+                >
+                  <span className="card-text-white group-hover:underline">Explore Details</span>
+                  <i
+                    className="card-arrow-active card-text-white fa-solid fa-arrow-right text-[11px] transition-transform duration-300"
+                  />
                 </div>
               </div>
             </article>

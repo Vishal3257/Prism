@@ -23,6 +23,18 @@ const OPENINGS = [
 ]
 
 export default function HiringOpenings() {
+  const handleApplyRole = (roleTitle) => {
+    window.dispatchEvent(
+      new CustomEvent('prism:select-job-role', {
+        detail: { role: roleTitle },
+      })
+    )
+    const formEl = document.getElementById('career-apply-form')
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+
   return (
     <section className="relative isolate overflow-hidden bg-white dark:bg-[#060B14] py-3 sm:py-4 lg:py-4 transition-colors duration-300">
       {/* Background Grid */}
@@ -67,7 +79,7 @@ export default function HiringOpenings() {
               key={opening.id}
               className="group relative border-b border-slate-200/80 dark:border-slate-800/80 py-5 transition-all duration-300 hover:bg-slate-50/70 dark:hover:bg-white/[0.02] lg:px-4"
             >
-              <div className="grid items-center gap-4 sm:gap-5 lg:grid-cols-[50px_1.5fr_160px_150px_160px] lg:gap-6">
+              <div className="grid items-center gap-4 sm:gap-5 lg:grid-cols-[40px_1.4fr_130px_120px_120px_auto] lg:gap-5">
                 {/* Index (Space Grotesk) */}
                 <div className="hidden font-number font-space text-sm font-semibold text-slate-400 dark:text-slate-600 lg:block">
                   {opening.id}
@@ -119,6 +131,18 @@ export default function HiringOpenings() {
                   <span className="font-number font-space font-semibold text-[#0B1220] dark:text-[#F8FAFC]">
                     {opening.experience}
                   </span>
+                </div>
+
+                {/* Quick Apply Button */}
+                <div className="flex items-center justify-start lg:justify-end">
+                  <button
+                    type="button"
+                    onClick={() => handleApplyRole(opening.title)}
+                    className="font-satoshi group/btn inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-1.5 text-xs font-semibold text-[#2563EB] shadow-2xs transition-all duration-300 hover:border-[#2563EB] hover:bg-[#2563EB] hover:text-white dark:border-slate-700 dark:bg-[#101A2B] dark:text-blue-400 dark:hover:bg-blue-600 dark:hover:text-white cursor-pointer"
+                  >
+                    <span>Apply now</span>
+                    <i className="fa-solid fa-arrow-right text-[10px] transition-transform duration-300 group-hover/btn:translate-x-0.5" />
+                  </button>
                 </div>
               </div>
 

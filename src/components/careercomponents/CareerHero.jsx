@@ -1,14 +1,20 @@
-import { useState, useRef, useMemo } from 'react'
+import { useState, useRef, useMemo, useEffect } from 'react'
+import emailjs from '@emailjs/browser'
 import { COMPANY } from '../../data/companyData'
 
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+
 const JOB_ROLES = [
+  'UI/UX Designer',
+  'Digital Marketing Executive',
   'Frontend Developer',
   'Backend Developer',
   'Full Stack Developer',
   'React.js Developer',
   'Django Developer',
   'Node.js Developer',
-  'UI/UX Designer',
   'DevOps Engineer',
   'Database Engineer',
   'Internship',
@@ -41,6 +47,22 @@ export default function CareerHero() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const fileInputRef = useRef(null)
 
+  // Auto-select role when triggered from job openings section
+  useEffect(() => {
+    const handleRoleSelect = (e) => {
+      const { role } = e.detail || {}
+      if (role) {
+        setFormData((prev) => ({ ...prev, role }))
+        const formEl = document.getElementById('career-apply-form')
+        if (formEl) {
+          formEl.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        }
+      }
+    }
+    window.addEventListener('prism:select-job-role', handleRoleSelect)
+    return () => window.removeEventListener('prism:select-job-role', handleRoleSelect)
+  }, [])
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
@@ -64,25 +86,137 @@ export default function CareerHero() {
     if (fileInputRef.current) fileInputRef.current.value = ''
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if (!formData.name.trim() || !formData.email.trim() || !formData.contact.trim()) {
-      setStatus({ type: 'error', message: 'Please fill in all required fields (*).' })
+    if (!formData.name.trim()) {
+      setStatus({ type: 'error', message: 'Please enter your full name.' })
+      return
+    }
+    if (formData.name.trim().length < 2) {
+      setStatus({ type: 'error', message: 'Name must be at least 2 characters.' })
+      return
+    }
+    if (!formData.email.trim()) {
+      setStatus({ type: 'error', message: 'Please enter your email address.' })
+      return
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      setStatus({ type: 'error', message: 'Please enter a valid email address.' })
+      return
+    }
+    if (!formData.contact.trim()) {
+      setStatus({ type: 'error', message: 'Please enter your contact number.' })
+      return
+    }
+    if (!/^[+0-9\s\-()]{7,20}$/.test(formData.contact.trim())) {
+      setStatus({ type: 'error', message: 'Please enter a valid phone number (at least 7 digits).' })
+      return
+    }
+
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+      console.error('EmailJS configuration error: Missing environment variables.')
+      setStatus({
+        type: 'error',
+        message:
+          'Email service configuration is not set in environment. Please apply via WhatsApp or contact contact.prisminfotech@gmail.com.',
+      })
       return
     }
 
     setIsSubmitting(true)
-    setTimeout(() => {
-      setIsSubmitting(false)
+    setStatus({ type: '', message: '' })
+
+    const resumeInfo = resumeFile
+      ? `${resumeFile.name} (${(resumeFile.size / 1024).toFixed(1)} KB)`
+      : 'Not uploaded via form'
+
+    // Formatted candidate dossier ensuring complete info delivery
+    const formattedApplicationDetails = [
+      `===========================================`,
+      `💼 NEW JOB APPLICATION - PRISM INFOTECH`,
+      `===========================================`,
+      `👤 Candidate Name : ${formData.name.trim()}`,
+      `📧 Email Address  : ${formData.email.trim()}`,
+      `📱 Contact / Phone: ${formData.contact.trim()}`,
+      `📍 Location       : ${formData.location.trim() || 'Not specified'}`,
+      `🎯 Desired Role   : ${formData.role || 'General Application'}`,
+      `📄 Resume File    : ${resumeInfo}`,
+      ``,
+      `💬 Candidate Message / Portfolio Links:`,
+      `${formData.message.trim() || 'No additional note provided'}`,
+      `===========================================`,
+    ].join('\n')
+
+    const templateParams = {
+      // Standard personal names
+      name: formData.name.trim(),
+      from_name: formData.name.trim(),
+      user_name: formData.name.trim(),
+
+      // Standard emails & reply-to
+      email: formData.email.trim(),
+      from_email: formData.email.trim(),
+      user_email: formData.email.trim(),
+      reply_to: formData.email.trim(),
+
+      // Contact & location
+      phone: formData.contact.trim(),
+      phone_number: formData.contact.trim(),
+      contact: formData.contact.trim(),
+      location: formData.location.trim() || 'Not provided',
+      city: formData.location.trim() || 'Not provided',
+
+      // Role / service mapping
+      role: formData.role || 'General Application',
+      job_role: formData.role || 'General Application',
+      position: formData.role || 'General Application',
+      service: `Job Application: ${formData.role || 'General Application'}`,
+      selected_service: `Job Application: ${formData.role || 'General Application'}`,
+      company: 'Job Applicant',
+      company_name: 'Job Applicant',
+
+      // Resume info
+      resume: resumeInfo,
+      resume_name: resumeInfo,
+
+      // Complete candidate dossier
+      message: formattedApplicationDetails,
+      project_details: formattedApplicationDetails,
+      notes: formData.message.trim() || 'None',
+
+      // Routing info
+      to_email: COMPANY.email || 'contact.prisminfotech@gmail.com',
+      to_name: `${COMPANY.name} Recruitment Team`,
+      subject: `New Job Application: ${formData.role || 'General'} - ${formData.name.trim()}`,
+    }
+
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      )
+
       setStatus({
         type: 'success',
-        message: 'Application received! Our recruitment team will review your profile shortly.',
+        message:
+          'Application submitted successfully! Our recruitment team will review your profile and contact you shortly.',
       })
       setFormData({ name: '', email: '', contact: '', location: '', role: '', message: '' })
       setResumeFile(null)
       if (fileInputRef.current) fileInputRef.current.value = ''
-    }, 800)
+    } catch (err) {
+      console.error('EmailJS Career application error:', err)
+      setStatus({
+        type: 'error',
+        message:
+          'Failed to send application. Please try again or apply directly via WhatsApp / email (contact.prisminfotech@gmail.com).',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const whatsappUrl = useMemo(() => {
@@ -157,7 +291,7 @@ export default function CareerHero() {
           </div>
 
           {/* ================= RIGHT FORM CONTAINER ================= */}
-          <div className="relative w-full max-w-[430px] mx-auto lg:ml-auto lg:mr-0">
+          <div id="career-apply-form" className="relative w-full max-w-[430px] mx-auto lg:ml-auto lg:mr-0 scroll-mt-24">
             <div className="pointer-events-none absolute -inset-1 -z-10 rounded-2xl bg-gradient-to-br from-[#2563EB]/15 to-[#35B8A5]/15 blur-lg" />
 
             <div className="rounded-2xl border border-slate-200/90 bg-white/95 p-5 sm:p-6 shadow-xl shadow-slate-900/5 backdrop-blur-md dark:border-slate-800 dark:bg-[#101A2B]/95 dark:shadow-black/40">
