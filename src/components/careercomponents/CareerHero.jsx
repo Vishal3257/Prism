@@ -2,10 +2,10 @@ import { useState, useRef, useMemo, useEffect } from 'react'
 import emailjs from '@emailjs/browser'
 import { COMPANY } from '../../data/companyData'
 
-// const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
-// const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_CAREER_TEMPLATE_ID
-// const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_CAREER_TEMPLATE_ID
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+ 
 const JOB_ROLES = [
   'UI/UX Designer',
   'Digital Marketing Executive',
