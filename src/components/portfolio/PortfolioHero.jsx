@@ -97,7 +97,7 @@ export default function PortfolioHero() {
               <span className="block">WEB.</span>
               <span className="block">MOBILE.</span>
               <span className="block">GRAPHIC.</span>
-              <span className="text-gradient block font-normal">MARKETING Skil</span>
+              <span className="text-gradient block font-normal">MARKETING</span>
             </h1>
 
             {/* Description (Satoshi) */}

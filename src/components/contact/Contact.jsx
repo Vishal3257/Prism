@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react'
+import emailjs from '@emailjs/browser'
 import { COMPANY, SERVICES } from '../../data/companyData'
+
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'service_y95hkk2'
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'template_7m8oeto'
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'tGl_BQ3_4xRvXwJZA'
 
 export default function Contact() {
   const [form, setForm] = useState({
@@ -8,18 +13,13 @@ export default function Contact() {
     phone: '',
     company: '',
     service: '',
-    budget: 'Flexible',
-    timeline: '1-2 Months',
     message: '',
   })
 
   const [touched, setTouched] = useState({})
   const [errors, setErrors] = useState({})
-  const [status, setStatus] = useState(null)
-  const [copied, setCopied] = useState(false)
-
-  const budgetOptions = ['Flexible', '< $1k', '$1k - $3k', '$3k - $10k', '$10k+']
-  const timelineOptions = ['Urgent (< 2 wks)', '1-2 Months', '3+ Months', 'Planning']
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [status, setStatus] = useState(null) // { type: 'success' | 'error' | 'info', message: string }
 
   // Validate form fields
   const validateField = (field, value) => {
@@ -81,60 +81,99 @@ export default function Contact() {
     setErrors((prev) => ({ ...prev, [name]: validateField(name, value) }))
   }
 
-  const buildBriefText = () => {
-    const { name, email, phone, company, service, budget, timeline, message } = form
-    return (
-      `Hello Prism Infotech,\n\n` +
-      `I would like to inquire about your engineering & digital services.\n\n` +
-      `👤 Name: ${name}\n` +
-      `📧 Email: ${email}\n` +
-      `📱 Phone: ${phone || 'N/A'}\n` +
-      `🏢 Company: ${company || 'N/A'}\n` +
-      `🛠️ Service: ${service || 'General Inquiry'}\n` +
-      `💰 Budget: ${budget}\n` +
-      `⏱️ Timeline: ${timeline}\n` +
-      `💬 Project Scope:\n${message || 'No additional details provided'}`
-    )
-  }
-
-  const handleSubmitWhatsApp = (e) => {
+  // Handle direct EmailJS submission to company email
+  const handleSubmitEmail = async (e) => {
     e.preventDefault()
     setTouched({ name: true, email: true, service: true, phone: true })
     if (!validateAll()) return
 
-    const text = buildBriefText()
-    const url = `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(text)}`
-    window.open(url, '_blank')
-    setStatus('Opening WhatsApp chat...')
-    setTimeout(() => setStatus(null), 4000)
-  }
+    setIsSubmitting(true)
+    setStatus(null)
 
-  const handleSendEmail = () => {
-    setTouched({ name: true, email: true, service: true, phone: true })
-    if (!validateAll()) return
+    // Match all common template variable naming schemes used in EmailJS templates
+    const templateParams = {
+      name: form.name,
+      from_name: form.name,
+      user_name: form.name,
 
-    const subject = encodeURIComponent(`Project Inquiry: ${form.service || 'Digital Services'} - ${form.name}`)
-    const body = encodeURIComponent(buildBriefText())
-    window.location.href = `mailto:${COMPANY.email}?subject=${subject}&body=${body}`
-    setStatus('Opening your default email client...')
-    setTimeout(() => setStatus(null), 4000)
-  }
+      email: form.email,
+      from_email: form.email,
+      user_email: form.email,
+      reply_to: form.email,
 
-  const handleCopyClipboard = async () => {
-    const text = buildBriefText()
+      phone: form.phone || 'Not provided',
+      phone_number: form.phone || 'Not provided',
+
+      company: form.company || 'Not provided',
+      company_name: form.company || 'Not provided',
+
+      service: form.service,
+      service_name: form.service,
+      selected_service: form.service,
+
+      message: form.message || 'No project description provided',
+      project_details: form.message || 'No project description provided',
+
+      to_email: COMPANY.email || 'contact.prisminfotech@gmail.com',
+      to_name: COMPANY.name || 'Prism Infotech',
+    }
+
     try {
-      await navigator.clipboard.writeText(text)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 3000)
-    } catch {
-      // Fallback
-      setStatus('Failed to copy to clipboard')
-      setTimeout(() => setStatus(null), 3000)
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      )
+
+      setStatus({
+        type: 'success',
+        message: 'Thank you! Your message has been sent successfully. We will get back to you within 24 hours.',
+      })
+
+      // Reset form on success
+      setForm({
+        name: '',
+        email: '',
+        phone: '',
+        company: '',
+        service: '',
+        message: '',
+      })
+      setTouched({})
+      setErrors({})
+    } catch (err) {
+      console.error('EmailJS submit error:', err)
+      setStatus({
+        type: 'error',
+        message: 'Unable to send message via EmailJS right now. Please check your connection or contact us directly on WhatsApp.',
+      })
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
+  // Optional WhatsApp quick forward
+  const handleSendWhatsApp = () => {
+    setTouched({ name: true, email: true, service: true, phone: true })
+    if (!validateAll()) return
+
+    const text =
+      `Hello Prism Infotech,\n\n` +
+      `I would like to inquire about your engineering & digital services.\n\n` +
+      `👤 Name: ${form.name}\n` +
+      `📧 Email: ${form.email}\n` +
+      `📱 Phone: ${form.phone || 'N/A'}\n` +
+      `🏢 Company: ${form.company || 'N/A'}\n` +
+      `🛠️ Service: ${form.service || 'General Inquiry'}\n` +
+      `💬 Project Scope:\n${form.message || 'No additional details provided'}`
+
+    const url = `https://wa.me/${COMPANY.whatsappNumber}?text=${encodeURIComponent(text)}`
+    window.open(url, '_blank')
+  }
+
   return (
-    <section id="contact" className="py-10 sm:py-14 lg:py-16 bg-gradient-subtle border-t border-slate-200/60 dark:border-slate-800/60">
+    <section id="contact" className="py-2 sm:py-3 lg:py-4 bg-gradient-subtle border-t border-slate-200/60 dark:border-slate-800/60">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
           <span className="text-xs sm:text-sm font-bold tracking-widest text-blue-600 dark:text-blue-400 uppercase">
@@ -149,7 +188,7 @@ export default function Contact() {
         </div>
 
         <form
-          onSubmit={handleSubmitWhatsApp}
+          onSubmit={handleSubmitEmail}
           noValidate
           className="p-6 sm:p-10 rounded-3xl bg-white/80 dark:bg-slate-850/70 backdrop-blur-md border border-slate-200/80 dark:border-slate-800 shadow-xl space-y-5"
         >
@@ -295,58 +334,6 @@ export default function Contact() {
             )}
           </div>
 
-          {/* Budget Selector Chips */}
-          <div>
-            <span className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
-              Estimated Project Budget
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {budgetOptions.map((opt) => {
-                const isSelected = form.budget === opt
-                return (
-                  <button
-                    key={opt}
-                    type="button"
-                    onClick={() => setForm((prev) => ({ ...prev, budget: opt }))}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-600/30'
-                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400'
-                    }`}
-                  >
-                    {opt}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          {/* Timeline Selector Chips */}
-          <div>
-            <span className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-2">
-              Target Launch Timeline
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {timelineOptions.map((opt) => {
-                const isSelected = form.timeline === opt
-                return (
-                  <button
-                    key={opt}
-                    type="button"
-                    onClick={() => setForm((prev) => ({ ...prev, timeline: opt }))}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                      isSelected
-                        ? 'bg-blue-600 text-white shadow-sm ring-2 ring-blue-600/30'
-                        : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:border-blue-400'
-                    }`}
-                  >
-                    {opt}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
           {/* Message / Scope */}
           <div>
             <div className="flex items-center justify-between mb-1.5">
@@ -375,43 +362,56 @@ export default function Contact() {
 
           {/* Action Buttons */}
           <div className="pt-2 space-y-3">
+            {/* Primary Submit Button: Triggers EmailJS */}
             <button
               type="submit"
-              className="w-full bg-gradient-primary text-white font-bold py-3.5 sm:py-4 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer"
+              disabled={isSubmitting}
+              className="w-full bg-gradient-primary text-white font-bold py-3.5 sm:py-4 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/35 hover:-translate-y-0.5 transition-all text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none"
             >
-              <i className="fa-brands fa-whatsapp text-lg" />
-              <span>Send Inquiry via WhatsApp</span>
+              {isSubmitting ? (
+                <>
+                  <i className="fa-solid fa-circle-notch fa-spin text-lg" />
+                  <span>Sending Message...</span>
+                </>
+              ) : (
+                <>
+                  <i className="fa-solid fa-paper-plane text-base" />
+                  <span>Send Message</span>
+                </>
+              )}
             </button>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {/* Secondary Option: WhatsApp */}
+            <div>
               <button
                 type="button"
-                onClick={handleSendEmail}
-                className="py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
+                onClick={handleSendWhatsApp}
+                className="py-2.5 px-4 w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
-                <i className="fa-regular fa-envelope text-blue-500" />
-                <span>Send via Email</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={handleCopyClipboard}
-                className="py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer"
-              >
-                <i className={`fa-solid ${copied ? 'fa-check text-teal-500' : 'fa-copy text-blue-500'}`} />
-                <span>{copied ? 'Copied to Clipboard!' : 'Copy Inquiry Brief'}</span>
+                <i className="fa-brands fa-whatsapp text-emerald-500 text-base" />
+                <span>Or Chat with Us on WhatsApp</span>
               </button>
             </div>
           </div>
 
-          {/* Live Status Toast */}
+          {/* Feedback Status Toast */}
           {status && (
             <div
               role="status"
-              className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/70 border border-blue-200 dark:border-blue-800 text-center text-xs sm:text-sm font-semibold text-blue-700 dark:text-blue-300 animate-in fade-in"
+              className={`p-4 rounded-xl border text-xs sm:text-sm font-medium flex items-center gap-2.5 animate-in fade-in transition-all ${
+                status.type === 'success'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/70 border-emerald-200 dark:border-emerald-800 text-emerald-800 dark:text-emerald-200'
+                  : 'bg-rose-50 dark:bg-rose-950/70 border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200'
+              }`}
             >
-              <i className="fa-solid fa-circle-info mr-1.5" />
-              {status}
+              <i
+                className={`text-base shrink-0 ${
+                  status.type === 'success'
+                    ? 'fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400'
+                    : 'fa-solid fa-triangle-exclamation text-rose-600 dark:text-rose-400'
+                }`}
+              />
+              <span>{status.message}</span>
             </div>
           )}
         </form>
@@ -419,4 +419,3 @@ export default function Contact() {
     </section>
   )
 }
-

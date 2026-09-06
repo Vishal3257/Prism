@@ -47,7 +47,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white/95 dark:bg-slate-950/90 backdrop-blur-md border-b border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.03)] transition-colors duration-300">
+    <nav className="sticky py-2 lg:py-1 top-0 z-50 w-full bg-white/95 dark:bg-slate-950/90 backdrop-blur-md border-b border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.03)] transition-colors duration-300">
       <div className="w-full flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-8 xl:px-12 2xl:px-16">
 
         {/* Logo (Left) - Switches to logo2.png in dark mode */}
